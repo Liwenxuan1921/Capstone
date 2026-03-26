@@ -1,0 +1,36 @@
+\chapter{Introduction}
+
+This thesis studies whether transfer learning and explainable deep learning can improve the performance and interpretability of chest X-ray diagnostic classification. The project is deliberately scoped as a binary classification problem on the NIH ChestXray14 dataset, where images labeled ``No Finding'' are treated as normal and all other labeled cases are treated as abnormal. Two convolutional neural network models, ResNet50 and DenseNet121, are compared under both training-from-scratch and transfer-learning settings, and Grad-CAM is used to visualize the basis of model predictions.
+
+\section{Background}
+Chest X-ray imaging is one of the most widely used medical imaging modalities because it is inexpensive, fast, and routinely available in clinical settings. It plays an important role in screening and monitoring thoracic diseases, but manual interpretation can be time-consuming and subject to observer variability. As the number of medical images continues to increase, computer-aided diagnostic systems based on deep learning have become an important research direction.
+
+\section{Motivation}
+Recent convolutional neural network architectures have shown strong performance in general image recognition and medical image analysis. However, chest X-ray classification still faces practical challenges such as label noise, class imbalance, and limited interpretability. In addition, performance gains reported in the literature often depend on transfer learning, yet the benefit of transfer learning should still be validated in a controlled experimental setting for the selected dataset and task. This motivates a focused comparison between models trained from scratch and models initialized with pretrained weights.
+
+\section{Problem Statement}
+The main problem addressed in this thesis is how to build a chest X-ray classification pipeline that is both effective and interpretable. Specifically, this work asks whether transfer learning can improve binary normal-versus-abnormal classification on NIH ChestXray14 and whether Grad-CAM can provide meaningful insight into the prediction behavior of the model. The problem is significant because diagnostic support systems must not only achieve strong quantitative performance but also provide evidence that their decisions are based on medically plausible image regions.
+
+\section{Research Objectives}
+The objectives of this thesis are as follows:
+\begin{itemize}
+    \item formulate a clear binary chest X-ray classification task using NIH ChestXray14;
+    \item implement two baseline architectures, ResNet50 and DenseNet121;
+    \item compare training from scratch against transfer learning for both architectures;
+    \item evaluate the models using standard classification metrics and error analysis;
+    \item apply Grad-CAM to visualize representative successful and failed predictions.
+\end{itemize}
+
+\section{Scope and Limitations}
+This study is limited to a single public dataset and a binary classification setting. It does not include lesion localization, segmentation, object detection, federated learning, or clinical deployment. The models are evaluated as research prototypes rather than as medical devices. Interpretability is examined through Grad-CAM, which is useful for qualitative analysis but does not provide a complete explanation of model reasoning.
+
+\section{Research Questions}
+This thesis is organized around the following research questions:
+\begin{itemize}
+    \item How do ResNet50 and DenseNet121 perform on binary chest X-ray classification when trained from scratch?
+    \item Does transfer learning improve the performance of these models on NIH ChestXray14?
+    \item What types of prediction errors remain after training, and can Grad-CAM help explain those errors?
+\end{itemize}
+
+\section{Thesis Structure}
+Chapter 2 reviews prior work on chest X-ray classification, transfer learning in medical imaging, and explainable artificial intelligence. Chapter 3 describes the dataset, preprocessing pipeline, model architectures, training settings, evaluation metrics, and Grad-CAM method. Chapter 4 presents the experimental setup and quantitative results. Chapter 5 discusses the meaning of the results, model behavior, and study limitations. Chapter 6 concludes the thesis and proposes directions for future work.

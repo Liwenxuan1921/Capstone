@@ -1,0 +1,191 @@
+\documentclass[12pt, oneside]{book}
+\usepackage{CU-thesis}
+
+\newcommand{\thesistitleI}{Improving Chest X-ray Diagnostic Classification}
+\newcommand{\thesistitleII}{with Transfer Learning and Explainable Deep Learning}
+\newcommand{\myname}{Wenxuan Li}
+
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{tocloft}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+\usepackage{fontspec}
+\usepackage{pifont}
+
+\newcommand{\circled}[1]{\ding{\numexpr171+#1\relax}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define a custom font size for Table of Contents
+\newcommand{\tocchapfont}{\fontsize{12}{14}\selectfont\bfseries}
+\newcommand{\tocsecfont}{\fontsize{12}{14}\selectfont}
+\newcommand{\tocsubsecfont}{\fontsize{12}{14}\selectfont}
+
+\renewcommand{\cftchapfont}{\tocchapfont}
+\renewcommand{\cftsecfont}{\tocsecfont}
+\renewcommand{\cftsubsecfont}{\tocsubsecfont}
+\renewcommand{\cftchappagefont}{\tocchapfont}
+\renewcommand{\cftsecpagefont}{\tocsecfont}
+\renewcommand{\cftsubsecpagefont}{\tocsubsecfont}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}
+  {Chapter \thechapter}
+  {20pt}
+  {\Huge\bfseries}
+
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\begin{document}
+
+\frontmatter
+\pagestyle{plain}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1.0in}
+
+        {\LARGE \textbf{\expandafter{Improving Chest X-ray Diagnostic Classification}}}\\[2mm]
+        {\LARGE \textbf{\expandafter{with Transfer Learning and Explainable Deep Learning}}}
+        \vfill
+
+        {\scshape by:}\\
+        {\large \expandafter{Wenxuan Li}}\\
+        \vfill
+
+        {\scshape A Thesis Submitted in Fulfillment of the Requirements\\ for the Degree of}\\[0.25cm]
+        \textbf{Bachelor of Science}\\[0.1cm]
+        {\scshape in}\\
+        \textbf{Computer Science and Technology}\\[0.5cm]
+
+        \includegraphics[width=0.25\textwidth]{images/university_logo.png}\\[0.5cm]
+
+        {\fontsize{14}{18}\selectfont Department of Computer Science and Technology\\
+        Wenzhou-Kean University}\\[0.5cm]
+        {\fontsize{14}{18}\selectfont Supervised By: Supervisor's Name}\\[1.5cm]
+        {\large \textcopyright{}\fontsize{14}{18}\selectfont June 2026}
+    \end{center}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+% Info Page
+\setcounter{page}{2}
+\noindent
+Bachelor of Science (2026) \hfill Wenzhou-Kean University\\
+Computer Science and Technology \hfill Wenzhou, China
+\vspace*{\fill}
+
+\begin{tabular}{l l}
+  TITLE:           &\thesistitleI\\
+                   &\thesistitleII\\[5mm]
+  AUTHOR:          &\myname\\
+                   &B.Sc., Computer Science and Technology\\
+                   &Wenzhou-Kean University\\
+                   &Wenzhou, China\\[5mm]
+  SUPERVISORS:     &Dr. Firstname Lastname\\
+                   &Enter the name of your second supervisor, if applicable\\[5mm]
+  NUMBER OF PAGES: &Fill with the last Roman numeral page of the front matter, \pageref*{endmainmatter}
+\end{tabular}
+
+\vfill
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+This thesis investigates chest X-ray diagnostic classification using deep learning, with a focus on whether transfer learning can improve performance and whether explainable artificial intelligence can improve interpretability. The study uses the NIH ChestXray14 dataset and formulates the task as binary classification, where images labeled ``No Finding'' are treated as normal and images with any pathology label are treated as abnormal. Two convolutional neural network architectures, ResNet50 and DenseNet121, are evaluated under two training settings: training from scratch and transfer learning from ImageNet-pretrained weights. Model performance is assessed using accuracy, precision, recall, F1-score, area under the ROC curve, and confusion-matrix-based error analysis. To improve transparency, Grad-CAM is applied to representative predictions to visualize which image regions influence the model's decisions. Replace this placeholder abstract with the final completed results before submission.
+
+\textbf{Keywords:} chest X-ray classification; transfer learning; deep learning; Grad-CAM; medical image analysis.
+
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+Replace this section with your final acknowledgements before submission. You may thank your supervisor, readers, family, classmates, and any institution or dataset provider that supported the project.
+
+\clearpage
+\tableofcontents
+
+\cleardoublepage
+\phantomsection
+\listoffigures
+
+\cleardoublepage
+\phantomsection
+\listoftables
+
+\chapter*{Definition of Acronyms}
+\addcontentsline{toc}{chapter}{Definition of Acronyms}
+\begin{flushleft}
+    \begin{tabular}{|c|l|}
+    \hline
+    \textbf{Acronym} & \textbf{Definition} \\
+    \hline
+    AUC & Area Under the Curve \\
+    CNN & Convolutional Neural Network \\
+    DL & Deep Learning \\
+    GPU & Graphics Processing Unit \\
+    Grad-CAM & Gradient-weighted Class Activation Mapping \\
+    NIH & National Institutes of Health \\
+    ROC & Receiver Operating Characteristic \\
+    XAI & Explainable Artificial Intelligence \\
+    \hline
+    \end{tabular}
+\end{flushleft}
+
+\chapter*{Definition of Notations}
+\addcontentsline{toc}{chapter}{Definition of Notations}
+\begin{flushleft}
+    \begin{tabular}{|c|l|}
+        \hline
+        \textbf{Symbol} & \textbf{Meaning} \\
+        \hline
+        $x$ & Input chest X-ray image \\
+        $y$ & Ground-truth class label \\
+        $\hat{y}$ & Predicted class label \\
+        $p(y=1 \mid x)$ & Predicted probability of the abnormal class \\
+        $\mathcal{L}$ & Loss function \\
+        $\theta$ & Learnable model parameters \\
+        \hline
+    \end{tabular}
+\end{flushleft}
+
+\mainmatter
+\pagestyle{fancy}
+
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+\include{chapters/chapter5}
+\include{chapters/chapter6}
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{References}
+\phantomsection
+\bibitem{ref:wang2017}
+X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri, and R. M. Summers, ``ChestX-ray8: Hospital-scale Chest X-ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases,'' in \textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2017, pp. 2097--2106.
+\bibitem{ref:litjens2017}
+G. Litjens et al., ``A Survey on Deep Learning in Medical Image Analysis,'' \textit{Medical Image Analysis}, vol. 42, pp. 60--88, 2017.
+\bibitem{ref:he2016}
+K. He, X. Zhang, S. Ren, and J. Sun, ``Deep Residual Learning for Image Recognition,'' in \textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2016, pp. 770--778.
+\bibitem{ref:huang2017}
+G. Huang, Z. Liu, L. van der Maaten, and K. Q. Weinberger, ``Densely Connected Convolutional Networks,'' in \textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2017, pp. 4700--4708.
+\bibitem{ref:selvaraju2017}
+R. R. Selvaraju et al., ``Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization,'' in \textit{Proceedings of the IEEE International Conference on Computer Vision}, 2017, pp. 618--626.
+\end{thebibliography}
+
+\label{endmainmatter}
+\end{document}

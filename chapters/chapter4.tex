@@ -1,0 +1,22 @@
+\chapter{Experiments and Results}
+
+\section{Experimental Setup}
+This section should summarize the final dataset split, preprocessing configuration, hardware environment, and training hyperparameters. It should clearly present the four core experiments so that the reader can understand how the comparison is organized:
+\begin{itemize}
+    \item ResNet50 trained from scratch;
+    \item ResNet50 with transfer learning;
+    \item DenseNet121 trained from scratch;
+    \item DenseNet121 with transfer learning.
+\end{itemize}
+
+\section{Baseline Results}
+Present the results of the scratch-training experiments first. This section should include a table containing accuracy, precision, recall, F1-score, and AUC for both architectures. Training curves and confusion matrices may also be included if they help show convergence behavior and major error types.
+
+\section{Transfer Learning Results}
+This section should present the results obtained after initializing the models with pretrained weights. The same metrics used in the baseline section should be reported so that direct comparison is possible. The text should note whether transfer learning improves convergence speed, final performance, or both.
+
+\section{Comparative Analysis}
+Compare all four experiments in a single integrated discussion. Explain which model performs best overall, which setting is most computationally efficient, and whether transfer learning benefits one architecture more than the other. If the results are mixed, interpret them carefully rather than forcing a simple conclusion.
+
+\section{Grad-CAM Visualization Results}
+Present selected Grad-CAM visualizations for representative test cases. Include both correct predictions and failure cases. The discussion should focus on whether the model attends to clinically plausible regions and whether the visualizations help explain common mistakes. This section connects the quantitative results to model interpretability.

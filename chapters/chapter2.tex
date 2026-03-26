@@ -1,0 +1,21 @@
+\chapter{Literature Review}
+
+This chapter reviews the main research areas that support the thesis: deep learning for chest X-ray analysis, transfer learning in medical image classification, and explainable artificial intelligence for model interpretation. The purpose of the review is not only to summarize prior work but also to position the present study within a focused and achievable research gap.
+
+\section{Deep Learning for Chest X-ray Classification}
+Chest X-ray classification has become a representative application of deep learning in medical imaging because large public datasets have enabled data-driven approaches to disease recognition. Early work in this area established benchmark datasets and demonstrated that convolutional neural networks can detect thoracic abnormalities from chest radiographs. Subsequent studies improved performance through better architectures, training procedures, and label handling strategies. In this section, summarize the major chest X-ray datasets, common classification tasks, and the most influential CNN-based approaches.
+
+\section{ResNet and DenseNet in Medical Imaging}
+ResNet and DenseNet are widely used backbones for medical image classification because they balance strong representational power with practical implementation complexity. ResNet introduced residual connections to enable the training of deeper networks, while DenseNet improved feature reuse through dense connectivity. For this thesis, these two architectures are chosen because they are well established, easy to compare, and frequently used in chest X-ray studies. This section should explain why these models are appropriate baselines and summarize how prior medical imaging work has used them.
+
+\section{Transfer Learning in Medical Image Analysis}
+Transfer learning is commonly used in medical image analysis because labeled medical datasets are often smaller and noisier than natural image datasets. Initializing a model with weights pretrained on ImageNet can improve optimization, convergence speed, and final performance, especially when the target dataset is limited or imbalanced. However, the magnitude of this benefit depends on the target task, data quality, and fine-tuning strategy. In this section, review studies that compare training from scratch with transfer learning, and explain why this comparison is central to the present thesis.
+
+\section{Explainable Artificial Intelligence for Chest X-ray Models}
+High predictive performance alone is insufficient for safety-critical medical applications. Researchers therefore use explainability methods to inspect whether a model attends to clinically meaningful image regions. Among these methods, Grad-CAM is one of the most common because it can visualize class-discriminative regions without major architectural changes. This section should review explainability methods used for chest X-ray classification, discuss their strengths and weaknesses, and clarify why Grad-CAM is an appropriate choice for a compact capstone project.
+
+\section{Research Gap}
+Although many studies report strong chest X-ray classification results, fewer present a tightly controlled undergraduate-level study that compares two standard backbones under both scratch and transfer-learning settings and then complements the quantitative results with a focused Grad-CAM analysis. In addition, literature often emphasizes accuracy improvements without equally clear discussion of interpretability and practical error patterns. This thesis addresses that gap through a limited but coherent experimental design centered on one public dataset, one binary task, two architectures, and one explainability method.
+
+\section{Summary}
+The literature shows that chest X-ray classification is a mature but still active research area, that transfer learning is often beneficial but should be validated experimentally, and that explainability remains essential for trustworthy model interpretation. Based on these findings, the thesis proceeds with a focused evaluation of ResNet50 and DenseNet121 on NIH ChestXray14, comparing scratch training with transfer learning and interpreting model behavior through Grad-CAM.

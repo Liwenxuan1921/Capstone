@@ -1,0 +1,25 @@
+\chapter{Methodology}
+
+\section{Research Design}
+This thesis follows a comparative experimental design. The same dataset, preprocessing pipeline, train-validation-test split, and evaluation metrics are used for all models so that the effect of architecture choice and transfer learning can be compared fairly. The study evaluates four main experimental conditions: ResNet50 trained from scratch, ResNet50 with transfer learning, DenseNet121 trained from scratch, and DenseNet121 with transfer learning.
+
+\section{Dataset Description}
+The experiments are conducted on the NIH ChestXray14 dataset. This dataset contains chest radiographs annotated with disease labels extracted from radiology reports. In this thesis, the original multi-label annotations are simplified into a binary task. Images labeled ``No Finding'' are treated as the normal class, while images with one or more disease labels are treated as the abnormal class. This mapping creates a clear and manageable classification problem for the capstone.
+
+\section{Data Preprocessing}
+The dataset preprocessing pipeline should be described in sufficient detail to ensure reproducibility. This section should document image resizing, normalization, grayscale handling, data augmentation, and dataset splitting. If patient identifiers are available, the split should be performed at the patient level to reduce information leakage across training and testing. Class distribution statistics should also be reported to justify any imbalance-handling strategy used later in the experiments.
+
+\section{Model Architectures}
+Two convolutional neural network models are used in this thesis: ResNet50 and DenseNet121. Both models are well established in image classification and commonly adopted in medical imaging studies. This section should briefly explain the structure of each model, emphasizing the role of residual connections in ResNet and dense feature reuse in DenseNet. The classification head should be adapted to produce a binary output for the selected task.
+
+\section{Training Strategies}
+Two training strategies are compared for each model. In the first strategy, the network is trained from scratch using random initialization. In the second strategy, the network is initialized with ImageNet-pretrained weights and then fine-tuned on the chest X-ray data. You should describe the optimizer, learning rate, batch size, number of epochs, early stopping rule, loss function, and checkpoint selection strategy. If weighted loss or augmentation is used to address class imbalance, that decision should be documented here as well.
+
+\section{Evaluation Metrics}
+The models are evaluated using accuracy, precision, recall, F1-score, and area under the ROC curve. Confusion matrices are also used to examine false positives and false negatives. If possible, sensitivity and specificity should be reported because they are particularly meaningful in medical diagnosis settings. This section should explain why these metrics are appropriate for binary chest X-ray classification.
+
+\section{Explainability with Grad-CAM}
+To interpret the behavior of the trained models, Grad-CAM is applied to representative test samples. The purpose of this analysis is to visualize which regions of the chest X-ray contribute most strongly to the predicted class. This section should explain how Grad-CAM is generated, which layer is selected for visualization, and how the qualitative results are interpreted. Representative correct predictions and error cases should be included in the final analysis.
+
+\section{Implementation Environment}
+This section should list the implementation tools used for the experiments, such as Python, PyTorch, torchvision, NumPy, pandas, matplotlib, and scikit-learn. It should also summarize the computing environment, including the operating system, GPU model if available, and any important package versions that affect reproducibility.
