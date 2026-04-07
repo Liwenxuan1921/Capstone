@@ -1,0 +1,2 @@
+run_id,date,phase,experiment_id,model,training_strategy,dataset,label_definition,split_seed,image_size,batch_size,learning_rate,epochs,optimizer,loss_function,augmentation,weighted_loss,best_val_metric,test_accuracy,test_precision,test_recall,test_f1,test_auc,sensitivity,specificity,training_time_minutes,checkpoint_path,notes
+example_001,2026-03-30,Phase 1,E1,ResNet50,from_scratch,NIH ChestX-ray14,No Finding vs Any Pathology,42,224,32,0.001,20,Adam,CrossEntropy,false,false,,,,,,,,,,outputs/models/example.pt,fill after run

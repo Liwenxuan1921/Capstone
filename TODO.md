@@ -2,7 +2,7 @@
 
 ## Project Goal
 
-Topic: **Improving Chest X-ray Diagnostic Classification with Transfer Learning and Explainable Deep Learning**
+Topic: **Deep Learning for Medical Image Processing: Improving Chest X-ray Diagnostic Classification with Transfer Learning and Explainable Deep Learning**
 
 Fixed setup:
 
@@ -22,34 +22,34 @@ Fixed setup:
 
 ## Phase 1: Project Setup
 
-- [ ] Confirm the final title in all project notes and thesis files
-- [ ] Write one-paragraph problem definition
-- [ ] Write final research questions
-- [ ] Define evaluation metrics: accuracy, precision, recall, F1-score, AUC
-- [ ] Create a folder structure for data, code, outputs, and figures
-- [ ] Decide how experiment logs will be recorded
+- [x] Confirm the final title in all project notes and thesis files
+- [x] Write one-paragraph problem definition
+- [x] Write final research questions
+- [x] Define evaluation metrics: accuracy, precision, recall, F1-score, AUC
+- [x] Create a folder structure for data, code, outputs, and figures
+- [x] Decide how experiment logs will be recorded
 
 Suggested folders:
 
-- [ ] `data/`
-- [ ] `data/raw/`
-- [ ] `data/processed/`
-- [ ] `src/`
-- [ ] `outputs/`
-- [ ] `outputs/models/`
-- [ ] `outputs/figures/`
-- [ ] `outputs/results/`
-- [ ] `notes/`
+- [x] `data/`
+- [x] `data/raw/`
+- [x] `data/processed/`
+- [x] `src/`
+- [x] `outputs/`
+- [x] `outputs/models/`
+- [x] `outputs/figures/`
+- [x] `outputs/results/`
+- [x] `notes/`
 
 ## Phase 2: Literature Review
 
-- [ ] Collect 20 to 30 relevant papers
-- [ ] Separate papers into:
+- [x] Collect 20 to 30 relevant papers
+- [x] Separate papers into:
   - chest X-ray classification
   - transfer learning in medical imaging
   - explainable AI in medical imaging
-- [ ] Build a literature review table
-- [ ] Record for each paper:
+- [x] Build a literature review table
+- [x] Record for each paper:
   - citation
   - dataset
   - task
@@ -57,12 +57,14 @@ Suggested folders:
   - metrics
   - strengths
   - limitations
-- [ ] Identify 3 to 5 key papers most related to your project
-- [ ] Write a short summary of the research gap
-- [ ] Write draft notes for Chapter 2
+- [x] Identify 3 to 5 key papers most related to your project
+- [x] Write a short summary of the research gap
+- [x] Write draft notes for Chapter 2
 
 ## Phase 3: Dataset Preparation
 
+- [x] Prepare NIH ChestX-ray14 preprocessing and split-generation script
+- [x] Document expected raw data structure and output files
 - [ ] Download `NIH ChestX-ray14`
 - [ ] Read the dataset documentation
 - [ ] Locate the image files and label file
@@ -103,15 +105,15 @@ Outputs:
 
 - [ ] Set up the deep learning environment
 - [ ] Confirm library versions
-- [ ] Implement data loader
-- [ ] Implement training loop
-- [ ] Implement validation loop
-- [ ] Implement test loop
-- [ ] Implement metric calculation
-- [ ] Implement model checkpoint saving
-- [ ] Implement training log saving
-- [ ] Implement confusion matrix generation
-- [ ] Implement ROC/AUC plotting
+- [x] Implement data loader
+- [x] Implement training loop
+- [x] Implement validation loop
+- [x] Implement test loop
+- [x] Implement metric calculation
+- [x] Implement model checkpoint saving
+- [x] Implement training log saving
+- [x] Implement confusion matrix generation
+- [x] Implement ROC/AUC plotting
 
 Training settings to define:
 
@@ -239,31 +241,31 @@ Figures to prepare:
 
 ### Chapter 1: Introduction
 
-- [ ] Write research background
-- [ ] Write motivation
-- [ ] Write problem statement
-- [ ] Write research objectives
-- [ ] Write research questions
-- [ ] Write thesis structure
+- [x] Write research background
+- [x] Write motivation
+- [x] Write problem statement
+- [x] Write research objectives
+- [x] Write research questions
+- [x] Write thesis structure
 
 ### Chapter 2: Literature Review
 
-- [ ] Write overview of deep learning in medical imaging
-- [ ] Write overview of chest X-ray classification studies
-- [ ] Write overview of transfer learning studies
-- [ ] Write overview of explainable AI studies
-- [ ] Write research gap section
+- [x] Write overview of deep learning in medical imaging
+- [x] Write overview of chest X-ray classification studies
+- [x] Write overview of transfer learning studies
+- [x] Write overview of explainable AI studies
+- [x] Write research gap section
 
 ### Chapter 3: Methodology
 
-- [ ] Describe NIH ChestX-ray14
-- [ ] Describe binary label mapping
-- [ ] Describe preprocessing
-- [ ] Describe train/validation/test split
-- [ ] Describe `ResNet50` and `DenseNet121`
-- [ ] Describe scratch training and transfer learning settings
-- [ ] Describe evaluation metrics
-- [ ] Describe Grad-CAM method
+- [x] Describe NIH ChestX-ray14
+- [x] Describe binary label mapping
+- [x] Describe preprocessing
+- [x] Describe train/validation/test split
+- [x] Describe `ResNet50` and `DenseNet121`
+- [x] Describe scratch training and transfer learning settings
+- [x] Describe evaluation metrics
+- [x] Describe Grad-CAM method
 
 ### Chapter 4: Experiments and Results
 

@@ -2,7 +2,7 @@
 
 ## Topic
 
-**Improving Chest X-ray Diagnostic Classification with Transfer Learning and Explainable Deep Learning**
+**Deep Learning for Medical Image Processing: Improving Chest X-ray Diagnostic Classification with Transfer Learning and Explainable Deep Learning**
 
 This capstone focuses on a **single, manageable research problem**:
 

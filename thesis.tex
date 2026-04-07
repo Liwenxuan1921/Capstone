@@ -1,8 +1,10 @@
+% !TeX program = xelatex
 \documentclass[12pt, oneside]{book}
 \usepackage{CU-thesis}
 
-\newcommand{\thesistitleI}{Improving Chest X-ray Diagnostic Classification}
-\newcommand{\thesistitleII}{with Transfer Learning and Explainable Deep Learning}
+\newcommand{\thesistitleI}{Deep Learning for Medical Image Processing:}
+\newcommand{\thesistitleII}{Improving Chest X-ray Diagnostic Classification}
+\newcommand{\thesistitleIII}{with Transfer Learning and Explainable Deep Learning}
 \newcommand{\myname}{Wenxuan Li}
 
 \usepackage{titlesec}
@@ -53,31 +55,34 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page
+\newgeometry{top=1in,bottom=1in,left=1in,right=1in}
 \begin{titlepage}
     \begin{center}
-        \vspace*{1.0in}
+        \vspace*{-0.05in}
 
-        {\LARGE \textbf{\expandafter{Improving Chest X-ray Diagnostic Classification}}}\\[2mm]
-        {\LARGE \textbf{\expandafter{with Transfer Learning and Explainable Deep Learning}}}
-        \vfill
+        {\LARGE \textbf{\expandafter{\thesistitleI}}}\\[2mm]
+        {\LARGE \textbf{\expandafter{\thesistitleII}}}\\[2mm]
+        {\LARGE \textbf{\expandafter{\thesistitleIII}}}
+        \vspace{0.28in}
 
         {\scshape by:}\\
         {\large \expandafter{Wenxuan Li}}\\
-        \vfill
+        \vspace{0.28in}
 
         {\scshape A Thesis Submitted in Fulfillment of the Requirements\\ for the Degree of}\\[0.25cm]
         \textbf{Bachelor of Science}\\[0.1cm]
         {\scshape in}\\
-        \textbf{Computer Science and Technology}\\[0.5cm]
+        \textbf{Computer Science and Technology}\\[0.35cm]
 
-        \includegraphics[width=0.25\textwidth]{images/university_logo.png}\\[0.5cm]
+        \includegraphics[width=0.18\textwidth]{images/university_logo.png}\\[0.25cm]
 
         {\fontsize{14}{18}\selectfont Department of Computer Science and Technology\\
-        Wenzhou-Kean University}\\[0.5cm]
-        {\fontsize{14}{18}\selectfont Supervised By: Supervisor's Name}\\[1.5cm]
+        Wenzhou-Kean University}\\[0.2cm]
+        {\fontsize{14}{18}\selectfont Supervised By: Yue Zhao}\\[0.45cm]
         {\large \textcopyright{}\fontsize{14}{18}\selectfont June 2026}
     \end{center}
 \end{titlepage}
+\restoregeometry
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
@@ -91,13 +96,13 @@ Computer Science and Technology \hfill Wenzhou, China
 
 \begin{tabular}{l l}
   TITLE:           &\thesistitleI\\
-                   &\thesistitleII\\[5mm]
+                   &\thesistitleII\\
+                   &\thesistitleIII\\[5mm]
   AUTHOR:          &\myname\\
                    &B.Sc., Computer Science and Technology\\
                    &Wenzhou-Kean University\\
                    &Wenzhou, China\\[5mm]
-  SUPERVISORS:     &Dr. Firstname Lastname\\
-                   &Enter the name of your second supervisor, if applicable\\[5mm]
+  SUPERVISORS:     &Yue Zhao\\[5mm]
   NUMBER OF PAGES: &Fill with the last Roman numeral page of the front matter, \pageref*{endmainmatter}
 \end{tabular}
 
@@ -107,7 +112,7 @@ Computer Science and Technology \hfill Wenzhou, China
 \clearpage
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
-This thesis investigates chest X-ray diagnostic classification using deep learning, with a focus on whether transfer learning can improve performance and whether explainable artificial intelligence can improve interpretability. The study uses the NIH ChestXray14 dataset and formulates the task as binary classification, where images labeled ``No Finding'' are treated as normal and images with any pathology label are treated as abnormal. Two convolutional neural network architectures, ResNet50 and DenseNet121, are evaluated under two training settings: training from scratch and transfer learning from ImageNet-pretrained weights. Model performance is assessed using accuracy, precision, recall, F1-score, area under the ROC curve, and confusion-matrix-based error analysis. To improve transparency, Grad-CAM is applied to representative predictions to visualize which image regions influence the model's decisions. Replace this placeholder abstract with the final completed results before submission.
+Chest X-ray imaging is one of the most widely used diagnostic tools for detecting thoracic abnormalities, yet manual interpretation can be time-consuming and subject to inter-observer variability. Deep learning has shown strong potential for assisting radiographic diagnosis, but model performance often depends on the availability of labeled data and model decisions are frequently difficult to interpret. This thesis investigates whether transfer learning and explainable deep learning can improve chest X-ray diagnostic classification in a focused and reproducible experimental setting. The study uses the NIH ChestXray14 dataset and formulates the task as binary classification, where images labeled ``No Finding'' are treated as normal and images with any pathology label are treated as abnormal. Two convolutional neural network architectures, ResNet50 and DenseNet121, are evaluated under two training settings: training from scratch and transfer learning from ImageNet-pretrained weights. Model performance is assessed using accuracy, precision, recall, F1-score, area under the ROC curve, and confusion-matrix-based error analysis. To improve interpretability, Gradient-weighted Class Activation Mapping (Grad-CAM) is applied to representative predictions in order to visualize the image regions that most strongly influence classification decisions. The expected contribution of this thesis is a clear comparative analysis of model architecture and training strategy for binary chest X-ray classification, together with an interpretable evaluation of model behavior. This work aims to provide a practical and academically grounded capstone study on the role of transfer learning and explainability in medical image analysis.
 
 \textbf{Keywords:} chest X-ray classification; transfer learning; deep learning; Grad-CAM; medical image analysis.
 
@@ -183,8 +188,26 @@ G. Litjens et al., ``A Survey on Deep Learning in Medical Image Analysis,'' \tex
 K. He, X. Zhang, S. Ren, and J. Sun, ``Deep Residual Learning for Image Recognition,'' in \textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2016, pp. 770--778.
 \bibitem{ref:huang2017}
 G. Huang, Z. Liu, L. van der Maaten, and K. Q. Weinberger, ``Densely Connected Convolutional Networks,'' in \textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2017, pp. 4700--4708.
+\bibitem{ref:rajpurkar2017}
+P. Rajpurkar et al., ``CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays with Deep Learning,'' arXiv:1711.05225, 2017.
+\bibitem{ref:irvin2019}
+J. Irvin et al., ``CheXpert: A Large Chest Radiograph Dataset with Uncertainty Labels and Expert Comparison,'' in \textit{Proceedings of the AAAI Conference on Artificial Intelligence}, vol. 33, no. 1, pp. 590--597, 2019.
+\bibitem{ref:baltruschat2019}
+I. M. Baltruschat, H. Nickisch, M. Grass, T. Knopp, and A. Saalbach, ``Comparison of Deep Learning Approaches for Multi-Label Chest X-Ray Classification,'' \textit{Scientific Reports}, vol. 9, article 6381, 2019.
+\bibitem{ref:pan2010}
+S. J. Pan and Q. Yang, ``A Survey on Transfer Learning,'' \textit{IEEE Transactions on Knowledge and Data Engineering}, vol. 22, no. 10, pp. 1345--1359, 2010.
+\bibitem{ref:tajbakhsh2016}
+N. Tajbakhsh et al., ``Convolutional Neural Networks for Medical Image Analysis: Full Training or Fine Tuning?,'' \textit{IEEE Transactions on Medical Imaging}, vol. 35, no. 5, pp. 1299--1312, 2016.
+\bibitem{ref:shin2016}
+H.-C. Shin et al., ``Deep Convolutional Neural Networks for Computer-Aided Detection: CNN Architectures, Dataset Characteristics and Transfer Learning,'' \textit{IEEE Transactions on Medical Imaging}, vol. 35, no. 5, pp. 1285--1298, 2016.
+\bibitem{ref:yao2017}
+L. Yao, E. Poblenz, D. Dagunts, B. Covington, D. Bernard, and K. Lyman, ``Learning to Diagnose from Scratch by Exploiting Dependencies Among Labels,'' arXiv:1710.10501, 2017.
 \bibitem{ref:selvaraju2017}
 R. R. Selvaraju et al., ``Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization,'' in \textit{Proceedings of the IEEE International Conference on Computer Vision}, 2017, pp. 618--626.
+\bibitem{ref:chaddad2023}
+A. Chaddad, J. Peng, J. Xu, and A. Bouridane, ``Survey of Explainable AI Techniques in Healthcare,'' \textit{Sensors}, vol. 23, no. 2, article 634, 2023.
+\bibitem{ref:bhati2024}
+D. Bhati, F. Neha, and M. Amiruzzaman, ``A Survey on Explainable Artificial Intelligence (XAI) Techniques for Visualizing Deep Learning Models in Medical Imaging,'' \textit{Journal of Imaging}, vol. 10, no. 10, article 239, 2024.
 \end{thebibliography}
 
 \label{endmainmatter}
