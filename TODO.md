@@ -65,26 +65,26 @@ Suggested folders:
 
 - [x] Prepare NIH ChestX-ray14 preprocessing and split-generation script
 - [x] Document expected raw data structure and output files
-- [ ] Download `NIH ChestX-ray14`
-- [ ] Read the dataset documentation
-- [ ] Locate the image files and label file
-- [ ] Check whether patient IDs are available
-- [ ] Inspect class distribution
-- [ ] Define binary mapping:
+- [x] Download `NIH ChestX-ray14`
+- [x] Read the dataset documentation
+- [x] Locate the image files and label file
+- [x] Check whether patient IDs are available
+- [x] Inspect class distribution
+- [x] Define binary mapping:
   - `No Finding` -> `Normal`
   - all other findings -> `Abnormal`
-- [ ] Count how many samples are `Normal`
-- [ ] Count how many samples are `Abnormal`
-- [ ] Remove missing, broken, or duplicate entries if necessary
-- [ ] Perform patient-level splitting if possible
-- [ ] Create train/validation/test split
-- [ ] Save the split file for reproducibility
+- [x] Count how many samples are `Normal`
+- [x] Count how many samples are `Abnormal`
+- [x] Remove missing, broken, or duplicate entries if necessary
+- [x] Perform patient-level splitting if possible
+- [x] Create train/validation/test split
+- [x] Save the split file for reproducibility
 
 Recommended split:
 
-- [ ] Train 70%
-- [ ] Validation 15%
-- [ ] Test 15%
+- [x] Train 70%
+- [x] Validation 15%
+- [x] Test 15%
 
 Preprocessing tasks:
 
@@ -97,14 +97,15 @@ Preprocessing tasks:
 
 Outputs:
 
-- [ ] Dataset statistics table
-- [ ] Split summary table
+- [x] Dataset statistics table
+- [x] Split summary table
 - [ ] Preprocessing description for thesis
 
 ## Phase 4: Baseline Training Pipeline
 
-- [ ] Set up the deep learning environment
-- [ ] Confirm library versions
+- [x] Confirm the Python interpreter path
+- [x] Set up the deep learning environment
+- [x] Confirm library versions
 - [x] Implement data loader
 - [x] Implement training loop
 - [x] Implement validation loop
@@ -117,19 +118,19 @@ Outputs:
 
 Training settings to define:
 
-- [ ] Batch size
-- [ ] Learning rate
-- [ ] Number of epochs
-- [ ] Optimizer
-- [ ] Loss function
-- [ ] Early stopping rule
-- [ ] Random seed
+- [x] Batch size
+- [x] Learning rate
+- [x] Number of epochs
+- [x] Optimizer
+- [x] Loss function
+- [x] Early stopping rule
+- [x] Random seed
 
 ## Phase 5: Baseline Experiments
 
 ### ResNet50 from Scratch
 
-- [ ] Implement `ResNet50`
+- [x] Implement `ResNet50`
 - [ ] Train `ResNet50` from scratch
 - [ ] Save best checkpoint
 - [ ] Evaluate on validation set
@@ -141,7 +142,7 @@ Training settings to define:
 
 ### DenseNet121 from Scratch
 
-- [ ] Implement `DenseNet121`
+- [x] Implement `DenseNet121`
 - [ ] Train `DenseNet121` from scratch
 - [ ] Save best checkpoint
 - [ ] Evaluate on validation set
@@ -155,9 +156,9 @@ Training settings to define:
 
 ### ResNet50 with Transfer Learning
 
-- [ ] Load ImageNet pretrained weights
-- [ ] Replace final classification head
-- [ ] Train with frozen backbone
+- [x] Load ImageNet pretrained weights
+- [x] Replace final classification head
+- [x] Train with frozen backbone
 - [ ] Fine-tune upper layers or full model
 - [ ] Save best checkpoint
 - [ ] Evaluate on validation set
@@ -167,9 +168,9 @@ Training settings to define:
 
 ### DenseNet121 with Transfer Learning
 
-- [ ] Load ImageNet pretrained weights
-- [ ] Replace final classification head
-- [ ] Train with frozen backbone
+- [x] Load ImageNet pretrained weights
+- [x] Replace final classification head
+- [x] Train with frozen backbone
 - [ ] Fine-tune upper layers or full model
 - [ ] Save best checkpoint
 - [ ] Evaluate on validation set

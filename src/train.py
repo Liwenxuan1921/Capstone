@@ -13,7 +13,15 @@ from torch.utils.data import DataLoader
 from datasets import NIHBinaryChestXrayDataset, build_transforms
 from metrics import save_confusion_matrix_figure, save_roc_curve_figure
 from models import create_model, get_trainable_parameter_count
-from trainer import TrainerConfig, run_epoch, save_history_figure, save_json, train_model
+from trainer import (
+    ResumeState,
+    TrainerConfig,
+    load_history,
+    run_epoch,
+    save_history_figure,
+    save_json,
+    train_model,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -40,6 +48,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--output-root", type=Path, default=Path("outputs"))
     parser.add_argument("--experiment-name", type=str, default="")
+    parser.add_argument(
+        "--resume-checkpoint",
+        type=Path,
+        default=None,
+        help="Path to a saved checkpoint to resume training from.",
+    )
     return parser.parse_args()
 
 
@@ -61,6 +75,9 @@ def build_dataloader(dataset, batch_size: int, shuffle: bool, num_workers: int) 
 
 
 def make_experiment_name(args: argparse.Namespace) -> str:
+    if args.resume_checkpoint is not None and not args.experiment_name:
+        return Path(args.resume_checkpoint).resolve().parent.name
+
     if args.experiment_name:
         return args.experiment_name
 
@@ -70,6 +87,39 @@ def make_experiment_name(args: argparse.Namespace) -> str:
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     return f"{args.model}_{training_mode}_{timestamp}"
+
+
+def load_resume_checkpoint(
+    checkpoint_path: Path,
+    model: nn.Module,
+    optimizer: torch.optim.Optimizer,
+    device: str,
+    monitor_metric: str,
+    history_path: Path,
+) -> ResumeState:
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+    model.load_state_dict(checkpoint["model_state_dict"])
+    optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+
+    saved_epoch = int(checkpoint.get("epoch", 0))
+    saved_metrics = checkpoint.get("metrics", {})
+    saved_val_metrics = saved_metrics.get("val", {})
+    best_metric = float(
+        checkpoint.get(
+            "best_metric",
+            saved_val_metrics.get(monitor_metric, float("-inf")),
+        )
+    )
+    best_epoch = int(checkpoint.get("best_epoch", saved_epoch))
+    epochs_without_improvement = int(checkpoint.get("epochs_without_improvement", 0))
+
+    return ResumeState(
+        start_epoch=saved_epoch + 1,
+        best_metric=best_metric,
+        best_epoch=best_epoch,
+        epochs_without_improvement=epochs_without_improvement,
+        history=load_history(history_path),
+    )
 
 
 def main() -> None:
@@ -103,6 +153,7 @@ def main() -> None:
     figure_dir = args.output_root / "figures" / experiment_name
     log_dir = args.output_root / "logs" / experiment_name
     checkpoint_path = model_dir / "best_model.pt"
+    latest_checkpoint_path = model_dir / "last_checkpoint.pt"
     history_path = log_dir / "history.csv"
 
     model = create_model(
@@ -117,6 +168,20 @@ def main() -> None:
         lr=args.lr,
         weight_decay=args.weight_decay,
     )
+
+    resume_state = ResumeState()
+    if args.resume_checkpoint is not None:
+        resume_checkpoint_path = args.resume_checkpoint.resolve()
+        if not resume_checkpoint_path.exists():
+            raise FileNotFoundError(f"Resume checkpoint not found: {resume_checkpoint_path}")
+        resume_state = load_resume_checkpoint(
+            checkpoint_path=resume_checkpoint_path,
+            model=model,
+            optimizer=optimizer,
+            device=args.device,
+            monitor_metric="auc",
+            history_path=history_path,
+        )
 
     save_json(
         {
@@ -133,6 +198,8 @@ def main() -> None:
             "weight_decay": args.weight_decay,
             "patience": args.patience,
             "seed": args.seed,
+            "resume_checkpoint": str(args.resume_checkpoint.resolve()) if args.resume_checkpoint else None,
+            "resume_start_epoch": resume_state.start_epoch,
         },
         results_dir / "config.json",
     )
@@ -150,7 +217,9 @@ def main() -> None:
             monitor_metric="auc",
         ),
         checkpoint_path=checkpoint_path,
+        latest_checkpoint_path=latest_checkpoint_path,
         history_path=history_path,
+        resume_state=resume_state,
     )
 
     checkpoint = torch.load(checkpoint_path, map_location=args.device)

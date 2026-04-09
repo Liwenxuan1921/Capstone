@@ -104,10 +104,11 @@ For each experiment run, the pipeline writes:
 
 ## Current Status
 
-The code skeleton is in place, but it has not been executed in this environment because:
+The code skeleton is in place. The Python environment has now been confirmed and the required libraries have been installed.
+
+Current blocker:
 
 - the raw NIH dataset has not been added to `data/raw`
 - the processed split CSVs have not been generated yet
-- Python execution in the current shell environment still needs to be confirmed
 
 The next practical step is to finish Phase 3 by generating the split CSV files, then run the four core experiments.

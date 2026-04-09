@@ -20,6 +20,15 @@ class TrainerConfig:
     monitor_metric: str = "auc"
 
 
+@dataclass
+class ResumeState:
+    start_epoch: int = 1
+    best_metric: float = float("-inf")
+    best_epoch: int = -1
+    epochs_without_improvement: int = 0
+    history: Optional[List[Dict[str, float]]] = None
+
+
 def _to_float(value: Optional[float]) -> float:
     if value is None:
         return 0.0
@@ -85,12 +94,28 @@ def _append_history(history_path: Path, row: Dict[str, float]) -> None:
         writer.writerow(row)
 
 
+def load_history(history_path: Path | str) -> List[Dict[str, float]]:
+    history_path = Path(history_path)
+    if not history_path.exists():
+        return []
+
+    with history_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        rows: List[Dict[str, float]] = []
+        for row in reader:
+            rows.append({key: float(value) for key, value in row.items()})
+    return rows
+
+
 def _save_checkpoint(
     checkpoint_path: Path,
     model: nn.Module,
     optimizer: torch.optim.Optimizer,
     epoch: int,
     metrics: Dict[str, object],
+    best_metric: float,
+    best_epoch: int,
+    epochs_without_improvement: int,
 ) -> None:
     checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
     torch.save(
@@ -99,6 +124,9 @@ def _save_checkpoint(
             "model_state_dict": model.state_dict(),
             "optimizer_state_dict": optimizer.state_dict(),
             "metrics": metrics,
+            "best_metric": best_metric,
+            "best_epoch": best_epoch,
+            "epochs_without_improvement": epochs_without_improvement,
         },
         checkpoint_path,
     )
@@ -112,17 +140,21 @@ def train_model(
     optimizer: torch.optim.Optimizer,
     config: TrainerConfig,
     checkpoint_path: Path | str,
+    latest_checkpoint_path: Path | str,
     history_path: Path | str,
+    resume_state: Optional[ResumeState] = None,
 ) -> Dict[str, object]:
     checkpoint_path = Path(checkpoint_path)
+    latest_checkpoint_path = Path(latest_checkpoint_path)
     history_path = Path(history_path)
 
-    best_metric = float("-inf")
-    best_epoch = -1
-    epochs_without_improvement = 0
-    history: List[Dict[str, float]] = []
+    resume_state = resume_state or ResumeState()
+    best_metric = resume_state.best_metric
+    best_epoch = resume_state.best_epoch
+    epochs_without_improvement = resume_state.epochs_without_improvement
+    history: List[Dict[str, float]] = list(resume_state.history or [])
 
-    for epoch in range(1, config.epochs + 1):
+    for epoch in range(resume_state.start_epoch, config.epochs + 1):
         train_result = run_epoch(model, train_loader, criterion, config.device, optimizer=optimizer)
         val_result = run_epoch(model, val_loader, criterion, config.device, optimizer=None)
 
@@ -158,9 +190,23 @@ def train_model(
                 optimizer=optimizer,
                 epoch=epoch,
                 metrics={"train": train_metrics, "val": val_metrics},
+                best_metric=best_metric,
+                best_epoch=best_epoch,
+                epochs_without_improvement=epochs_without_improvement,
             )
         else:
             epochs_without_improvement += 1
+
+        _save_checkpoint(
+            checkpoint_path=latest_checkpoint_path,
+            model=model,
+            optimizer=optimizer,
+            epoch=epoch,
+            metrics={"train": train_metrics, "val": val_metrics},
+            best_metric=best_metric,
+            best_epoch=best_epoch,
+            epochs_without_improvement=epochs_without_improvement,
+        )
 
         if epochs_without_improvement >= config.patience:
             break
@@ -168,6 +214,7 @@ def train_model(
     return {
         "best_metric": best_metric,
         "best_epoch": best_epoch,
+        "epochs_without_improvement": epochs_without_improvement,
         "history": history,
     }
 

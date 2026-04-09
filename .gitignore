@@ -17,3 +17,51 @@
 
 # Temporary local files
 proposal_tmp.docx
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Large datasets and generated splits
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/test_list.txt
+!data/raw/train_val_list.txt
+data/processed/*
+!data/processed/.gitkeep
+
+# Training outputs
+outputs/models/*
+!outputs/models/.gitkeep
+outputs/figures/*
+!outputs/figures/.gitkeep
+outputs/results/*
+!outputs/results/.gitkeep
+outputs/logs/*
+!outputs/logs/.gitkeep
+!outputs/logs/experiment_log_template.csv
+!outputs/logs/*.md
+
+# Checkpoints, generated metrics, and plots
+*.pt
+*.pth
+*.png
+*.jpg
+*.jpeg
+
+# Local download and cache directories
+.cache/
+*.zip
