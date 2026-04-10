@@ -154,6 +154,7 @@ def main() -> None:
     log_dir = args.output_root / "logs" / experiment_name
     checkpoint_path = model_dir / "best_model.pt"
     latest_checkpoint_path = model_dir / "last_checkpoint.pt"
+    interrupt_checkpoint_path = model_dir / "interrupt_checkpoint.pt"
     history_path = log_dir / "history.csv"
 
     model = create_model(
@@ -204,23 +205,50 @@ def main() -> None:
         results_dir / "config.json",
     )
 
-    training_summary = train_model(
-        model=model,
-        train_loader=train_loader,
-        val_loader=val_loader,
-        criterion=criterion,
-        optimizer=optimizer,
-        config=TrainerConfig(
-            epochs=args.epochs,
-            patience=args.patience,
-            device=args.device,
-            monitor_metric="auc",
-        ),
-        checkpoint_path=checkpoint_path,
-        latest_checkpoint_path=latest_checkpoint_path,
-        history_path=history_path,
-        resume_state=resume_state,
-    )
+    try:
+        training_summary = train_model(
+            model=model,
+            train_loader=train_loader,
+            val_loader=val_loader,
+            criterion=criterion,
+            optimizer=optimizer,
+            config=TrainerConfig(
+                epochs=args.epochs,
+                patience=args.patience,
+                device=args.device,
+                monitor_metric="auc",
+            ),
+            checkpoint_path=checkpoint_path,
+            latest_checkpoint_path=latest_checkpoint_path,
+            interrupt_checkpoint_path=interrupt_checkpoint_path,
+            history_path=history_path,
+            resume_state=resume_state,
+        )
+    except KeyboardInterrupt:
+        save_json(
+            {
+                "experiment_name": experiment_name,
+                "model": args.model,
+                "pretrained": args.pretrained,
+                "freeze_backbone": args.freeze_backbone,
+                "device": args.device,
+                "resume_checkpoint": str(interrupt_checkpoint_path.resolve()),
+                "resume_start_epoch": resume_state.start_epoch,
+                "status": "interrupted",
+            },
+            results_dir / "interrupted.json",
+        )
+        print(
+            json.dumps(
+                {
+                    "experiment_name": experiment_name,
+                    "status": "interrupted",
+                    "resume_checkpoint": str(interrupt_checkpoint_path.resolve()),
+                },
+                indent=2,
+            )
+        )
+        return
 
     checkpoint = torch.load(checkpoint_path, map_location=args.device)
     model.load_state_dict(checkpoint["model_state_dict"])

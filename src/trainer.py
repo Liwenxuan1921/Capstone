@@ -141,11 +141,13 @@ def train_model(
     config: TrainerConfig,
     checkpoint_path: Path | str,
     latest_checkpoint_path: Path | str,
+    interrupt_checkpoint_path: Path | str,
     history_path: Path | str,
     resume_state: Optional[ResumeState] = None,
 ) -> Dict[str, object]:
     checkpoint_path = Path(checkpoint_path)
     latest_checkpoint_path = Path(latest_checkpoint_path)
+    interrupt_checkpoint_path = Path(interrupt_checkpoint_path)
     history_path = Path(history_path)
 
     resume_state = resume_state or ResumeState()
@@ -155,8 +157,22 @@ def train_model(
     history: List[Dict[str, float]] = list(resume_state.history or [])
 
     for epoch in range(resume_state.start_epoch, config.epochs + 1):
-        train_result = run_epoch(model, train_loader, criterion, config.device, optimizer=optimizer)
-        val_result = run_epoch(model, val_loader, criterion, config.device, optimizer=None)
+        try:
+            train_result = run_epoch(model, train_loader, criterion, config.device, optimizer=optimizer)
+            val_result = run_epoch(model, val_loader, criterion, config.device, optimizer=None)
+        except KeyboardInterrupt:
+            # Save the partially updated model state and restart from this epoch.
+            _save_checkpoint(
+                checkpoint_path=interrupt_checkpoint_path,
+                model=model,
+                optimizer=optimizer,
+                epoch=epoch - 1,
+                metrics={},
+                best_metric=best_metric,
+                best_epoch=best_epoch,
+                epochs_without_improvement=epochs_without_improvement,
+            )
+            raise
 
         train_metrics = train_result["metrics"]
         val_metrics = val_result["metrics"]
