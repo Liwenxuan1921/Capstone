@@ -23,6 +23,11 @@ from trainer import (
     train_model,
 )
 
+try:
+    torch.multiprocessing.set_sharing_strategy("file_system")
+except (AttributeError, RuntimeError):
+    pass
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train chest X-ray binary classification models.")
@@ -250,7 +255,8 @@ def main() -> None:
         )
         return
 
-    checkpoint = torch.load(checkpoint_path, map_location=args.device)
+    evaluation_checkpoint_path = checkpoint_path if checkpoint_path.exists() else latest_checkpoint_path
+    checkpoint = torch.load(evaluation_checkpoint_path, map_location=args.device)
     model.load_state_dict(checkpoint["model_state_dict"])
 
     test_result = run_epoch(model, test_loader, criterion, args.device, optimizer=None)

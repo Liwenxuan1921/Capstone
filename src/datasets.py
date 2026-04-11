@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import os
 from pathlib import Path
 from typing import Callable, Dict, List, Optional
 
@@ -42,7 +43,7 @@ class NIHBinaryChestXrayDataset(Dataset):
     def _resolve_image_path(self, row: Dict[str, str]) -> Path:
         image_path = row.get("image_path", "").strip()
         if image_path:
-            return Path(image_path)
+            return self._normalize_image_path(Path(image_path))
 
         if self.images_root is None:
             raise FileNotFoundError(
@@ -58,6 +59,18 @@ class NIHBinaryChestXrayDataset(Dataset):
             return matches[0]
 
         raise FileNotFoundError(f"Could not locate image file for: {row['image_name']}")
+
+    def _normalize_image_path(self, image_path: Path) -> Path:
+        if os.name != "nt":
+            return image_path
+
+        image_path_str = image_path.as_posix()
+        if image_path_str.startswith("/mnt/") and len(image_path_str) > 6 and image_path_str[6] == "/":
+            drive = image_path_str[5].upper()
+            remainder = image_path_str[7:].replace("/", "\\")
+            return Path(f"{drive}:\\{remainder}")
+
+        return image_path
 
     def __len__(self) -> int:
         return len(self.rows)

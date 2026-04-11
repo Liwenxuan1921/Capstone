@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import random
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -72,9 +73,12 @@ def infer_column(fieldnames: Iterable[str], candidates: Iterable[str]) -> str:
 
 def build_image_index(images_root: Path) -> Dict[str, Path]:
     image_index: Dict[str, Path] = {}
-    for path in images_root.rglob("*"):
-        if path.is_file() and path.suffix.lower() in {".png", ".jpg", ".jpeg"}:
-            image_index[path.name] = path
+    for root, _, files in os.walk(images_root, followlinks=True):
+        root_path = Path(root)
+        for name in files:
+            path = root_path / name
+            if path.suffix.lower() in {".png", ".jpg", ".jpeg"}:
+                image_index[path.name] = path
     return image_index
 
 

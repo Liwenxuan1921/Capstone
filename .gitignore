@@ -25,6 +25,7 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .venv/
+.venv-win/
 venv/
 
 # Notebook checkpoints
@@ -65,3 +66,4 @@ outputs/logs/*
 # Local download and cache directories
 .cache/
 *.zip
+win_*_check.txt
