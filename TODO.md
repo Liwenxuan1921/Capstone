@@ -88,18 +88,18 @@ Recommended split:
 
 Preprocessing tasks:
 
-- [ ] Resize images
-- [ ] Normalize pixel values
-- [ ] Convert grayscale format appropriately for the selected models
-- [ ] Define training augmentations
-- [ ] Define validation/test transforms
-- [ ] Document every preprocessing step
+- [x] Resize images
+- [x] Normalize pixel values
+- [x] Convert grayscale format appropriately for the selected models
+- [x] Define training augmentations
+- [x] Define validation/test transforms
+- [x] Document every preprocessing step
 
 Outputs:
 
 - [x] Dataset statistics table
 - [x] Split summary table
-- [ ] Preprocessing description for thesis
+- [x] Preprocessing description for thesis
 
 ## Phase 4: Baseline Training Pipeline
 
@@ -159,24 +159,24 @@ Training settings to define:
 - [x] Load ImageNet pretrained weights
 - [x] Replace final classification head
 - [x] Train with frozen backbone
-- [ ] Fine-tune upper layers or full model
-- [ ] Save best checkpoint
-- [ ] Evaluate on validation set
-- [ ] Evaluate on test set
+- [x] Fine-tune upper layers or full model
+- [x] Save best checkpoint
+- [x] Evaluate on validation set
+- [x] Evaluate on test set
 - [ ] Record training time
-- [ ] Save metrics
+- [x] Save metrics
 
 ### DenseNet121 with Transfer Learning
 
 - [x] Load ImageNet pretrained weights
 - [x] Replace final classification head
 - [x] Train with frozen backbone
-- [ ] Fine-tune upper layers or full model
-- [ ] Save best checkpoint
-- [ ] Evaluate on validation set
-- [ ] Evaluate on test set
+- [x] Fine-tune upper layers or full model
+- [x] Save best checkpoint
+- [x] Evaluate on validation set
+- [x] Evaluate on test set
 - [ ] Record training time
-- [ ] Save metrics
+- [x] Save metrics
 
 Optional only if needed for imbalance:
 
@@ -192,28 +192,28 @@ Optional only if needed for imbalance:
   - `ResNet50` scratch vs. transfer learning
   - `DenseNet121` scratch vs. transfer learning
   - `ResNet50` vs. `DenseNet121`
-- [ ] Identify the best-performing model
+- [x] Identify the best-performing model
 - [ ] Identify the most computationally efficient model
 - [ ] Analyze whether transfer learning improves performance consistently
 - [ ] Analyze error types using confusion matrices
-- [ ] Select final results for thesis tables
+- [x] Select final results for thesis tables
 
 Metrics to report:
 
-- [ ] Accuracy
-- [ ] Precision
-- [ ] Recall
-- [ ] F1-score
-- [ ] AUC
-- [ ] Sensitivity if possible
-- [ ] Specificity if possible
+- [x] Accuracy
+- [x] Precision
+- [x] Recall
+- [x] F1-score
+- [x] AUC
+- [x] Sensitivity if possible
+- [x] Specificity if possible
 
 Figures to prepare:
 
-- [ ] Training loss curves
-- [ ] Validation curves
-- [ ] Confusion matrices
-- [ ] ROC curves
+- [x] Training loss curves
+- [x] Validation curves
+- [x] Confusion matrices
+- [x] ROC curves
 
 ## Phase 8: Explainability with Grad-CAM
 
@@ -270,10 +270,10 @@ Figures to prepare:
 
 ### Chapter 4: Experiments and Results
 
-- [ ] Present experiment setup
+- [x] Present experiment setup
 - [ ] Present baseline results
-- [ ] Present transfer learning results
-- [ ] Present final comparison table
+- [x] Present transfer learning results
+- [x] Present final comparison table
 - [ ] Present Grad-CAM figures
 
 ### Chapter 5: Discussion

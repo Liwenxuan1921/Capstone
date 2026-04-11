@@ -11,7 +11,7 @@ The four experiments evaluated in this thesis are listed below:
     \item E4: DenseNet121 with transfer learning.
 \end{itemize}
 
-The dataset split, preprocessing parameters, batch size, optimizer, learning rate, training epochs, and checkpoint rule follow the methodology described in the previous chapter. For reproducibility, all major hyperparameters should be reported here again once the final experiments are complete. In the final version of this section, add the exact number of training, validation, and test images, the hardware configuration, and the finalized training settings used for all experiments.
+The experiments reported in this chapter use the finalized NIH ChestXray14 binary split introduced in Chapter 3, with 78,202 training images, 17,099 validation images, and 16,819 test images. All transfer-learning experiments were trained with an image size of 224, batch size of 16, Adam optimizer, learning rate of 0.001, weight decay of 0.0001, and a maximum of 20 epochs with early stopping patience set to 5. The same loss function, preprocessing pipeline, and evaluation metrics were retained across runs to keep the comparison controlled and interpretable.
 
 \begin{table}[htbp]
     \centering
@@ -58,28 +58,27 @@ The final written analysis in this section should answer the following questions
 \section{Transfer Learning Results}
 This section presents the results obtained when ResNet50 and DenseNet121 are initialized with ImageNet-pretrained weights. The purpose is to determine whether transfer learning improves performance relative to scratch training and whether the gains are consistent across both architectures.
 
-Transfer learning should be evaluated using the same metrics reported in the baseline section so that direct comparison is possible. In addition to final performance, the text should discuss whether transfer learning improves convergence speed or training stability. If transfer learning produces clear gains in AUC, F1-score, or recall, those improvements should be highlighted explicitly. If the gains are small or inconsistent, the analysis should explain why that may be the case in the context of chest X-ray data and binary label design.
+Transfer learning was evaluated using the same test metrics for both architectures. In the completed experiments, both pretrained models achieved test AUC values above 0.74, showing that pretrained visual representations transferred effectively to this binary chest X-ray task. However, the two models produced noticeably different error profiles. ResNet50 delivered the strongest overall balance across accuracy, recall, F1-score, and AUC, whereas DenseNet121 achieved higher precision and specificity at the cost of substantially lower recall.
 
 \begin{table}[htbp]
     \centering
     \caption{Results for models trained with transfer learning}
     \label{tab:transfer-results}
+    \resizebox{\textwidth}{!}{%
     \begin{tabular}{lcccccc}
         \toprule
         Model & Accuracy & Precision & Recall & F1-score & AUC & Training Time \\
         \midrule
-        ResNet50 + transfer learning & TBD & TBD & TBD & TBD & TBD & TBD \\
-        DenseNet121 + transfer learning & TBD & TBD & TBD & TBD & TBD & TBD \\
+        ResNet50 + transfer learning & 0.6955 & 0.6847 & 0.6272 & 0.6547 & 0.7454 & N/A \\
+        DenseNet121 + transfer learning & 0.6711 & 0.7225 & 0.4634 & 0.5646 & 0.7421 & N/A \\
         \bottomrule
-    \end{tabular}
+    \end{tabular}%
+    }
 \end{table}
 
-The final written analysis in this section should answer the following questions:
-\begin{itemize}
-    \item Does transfer learning improve each model relative to scratch training?
-    \item Is the improvement larger for ResNet50 or for DenseNet121?
-    \item Does transfer learning reduce training cost or only improve predictive performance?
-\end{itemize}
+The ResNet50 transfer-learning run completed all 20 epochs and achieved its best validation AUC at epoch 20. On the test set, it reached an AUC of 0.7454, accuracy of 0.6955, and F1-score of 0.6547. These values indicate that the model maintained a relatively balanced tradeoff between sensitivity and specificity. The DenseNet121 transfer-learning run was resumed on a second machine from the checkpoint saved after epoch 7 and stopped early at epoch 17. Its best validation AUC was 0.7348 at epoch 12, and its final test AUC was 0.7421. Although the AUC difference between the two models is small, the DenseNet121 model produced a much lower recall of 0.4634, which indicates that more abnormal cases were missed under the current threshold.
+
+At the same time, DenseNet121 achieved higher precision (0.7225) and specificity (0.8482) than ResNet50, suggesting that it was more conservative in assigning the abnormal label. This tradeoff is important in a medical screening context. A higher-recall model reduces the risk of missed abnormal cases, whereas a higher-specificity model reduces the number of false alarms. Under the binary formulation used in this study, ResNet50 appears to be the better balanced model, while DenseNet121 may be preferred only when the reduction of false positives is the dominant requirement.
 
 \section{Comparative Analysis}
 After presenting baseline and transfer-learning results separately, all four experiments should be compared in one integrated analysis. This section is the core of the chapter because it connects the numerical results back to the thesis research questions. The goal is not only to identify the best-performing model, but also to explain the tradeoffs between performance, efficiency, and interpretability.
@@ -88,27 +87,23 @@ After presenting baseline and transfer-learning results separately, all four exp
     \centering
     \caption{Final comparison of all four experiments}
     \label{tab:final-comparison}
+    \resizebox{\textwidth}{!}{%
     \begin{tabular}{lccccccc}
         \toprule
         Experiment & Accuracy & Precision & Recall & F1-score & AUC & Sensitivity & Specificity \\
         \midrule
         E1: ResNet50 scratch & TBD & TBD & TBD & TBD & TBD & TBD & TBD \\
-        E2: ResNet50 transfer & TBD & TBD & TBD & TBD & TBD & TBD & TBD \\
+        E2: ResNet50 transfer & 0.6955 & 0.6847 & 0.6272 & 0.6547 & 0.7454 & 0.6272 & 0.7537 \\
         E3: DenseNet121 scratch & TBD & TBD & TBD & TBD & TBD & TBD & TBD \\
-        E4: DenseNet121 transfer & TBD & TBD & TBD & TBD & TBD & TBD & TBD \\
+        E4: DenseNet121 transfer & 0.6711 & 0.7225 & 0.4634 & 0.5646 & 0.7421 & 0.4634 & 0.8482 \\
         \bottomrule
-    \end{tabular}
+    \end{tabular}%
+    }
 \end{table}
 
-The final comparative discussion should address the following points:
-\begin{itemize}
-    \item Which experiment achieved the best overall performance?
-    \item Whether transfer learning improved performance consistently across both models;
-    \item Whether one model was more computationally efficient than the other;
-    \item Whether any tradeoff exists between recall, precision, and overall robustness.
-\end{itemize}
+Among the experiments completed so far, ResNet50 with transfer learning achieved the best overall performance. It produced the highest accuracy, recall, F1-score, and AUC, making it the strongest candidate for the later Grad-CAM analysis. DenseNet121 with transfer learning remained competitive in AUC and clearly outperformed ResNet50 in precision and specificity, but its substantially lower recall means that more abnormal images were classified as normal.
 
-The analysis should remain careful and evidence-based. If one model has slightly higher accuracy but another has better recall or AUC, that tradeoff should be stated explicitly. Since this is a medical classification task, false negatives and false positives should be discussed in terms of practical implications rather than accuracy alone.
+Taken together, the current results suggest that transfer learning is effective for both architectures, but the two models operate at different practical tradeoff points. ResNet50 is more suitable when the goal is a balanced screening-oriented classifier that better preserves abnormal-case detection, while DenseNet121 behaves more conservatively and may be more appropriate when limiting false positives is the stronger priority. The two scratch-training experiments remain to be completed before the full four-way comparison can be finalized.
 
 \section{Training Curves and Error Analysis}
 This section should present supporting figures that explain how the models behaved during optimization. The most useful plots are training loss curves, validation loss curves, ROC curves, and confusion matrices. These figures help reveal whether the models converged smoothly, overfit the training data, or struggled with particular classes.
