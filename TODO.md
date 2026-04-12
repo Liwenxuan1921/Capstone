@@ -20,6 +20,92 @@ Fixed setup:
 - Explainability:
   - `Grad-CAM`
 
+## Must Finish Before Submission
+
+### Thesis Core
+
+- [x] Final title is fixed across thesis files
+- [x] Abstract is written
+- [ ] Acknowledgements are written
+- [x] Chapter 1 is drafted
+- [x] Chapter 2 is drafted
+- [x] Chapter 3 is drafted
+- [x] Chapter 4 includes experiment setup and completed transfer-learning results
+- [x] Chapter 5 discussion is drafted
+- [x] Chapter 6 conclusion and future work are drafted
+- [ ] Final language cleanup across Chapters 1-6
+- [ ] Final formatting check of the thesis PDF
+
+### Experiments and Results
+
+- [x] NIH ChestX-ray14 dataset is prepared
+- [x] Reproducible train/validation/test split is saved
+- [x] Transfer-learning experiment: `ResNet50`
+- [x] Transfer-learning experiment: `DenseNet121`
+- [x] Metrics are saved for completed runs
+- [x] Confusion matrix and ROC outputs are generated for `ResNet50`
+- [x] Final transfer-learning comparison table is inserted into Chapter 4
+- [x] Best-performing model is identified
+
+### Explainability
+
+- [x] Best-performing model is selected for Grad-CAM
+- [x] Representative test images are selected
+- [x] Grad-CAM for correct `Normal` prediction is generated
+- [x] Grad-CAM for correct `Abnormal` prediction is generated
+- [x] Grad-CAM for false positive is generated
+- [x] Grad-CAM for false negative is generated
+- [x] Short interpretation is written for selected Grad-CAM cases
+- [x] Grad-CAM figures are inserted into Chapter 4
+
+### References and Consistency
+
+- [ ] Check all in-text citations against the reference list
+- [ ] Ensure all cited papers appear in references
+- [ ] Ensure no important reference is listed but unused
+- [ ] Check consistency between text, tables, and reported numbers
+
+### Submission Readiness
+
+- [ ] Thesis PDF compiles cleanly enough for submission
+- [ ] Final `README` / project notes reflect the delivered scope
+- [ ] Defense slide outline is prepared
+
+## Optional If Time Allows
+
+### Additional Experiments
+
+- [ ] Train `ResNet50` from scratch
+- [ ] Train `DenseNet121` from scratch
+- [ ] Build the full four-experiment comparison table
+- [ ] Record training time for every run
+- [ ] Identify the most computationally efficient model
+
+### Extra Analysis
+
+- [ ] Analyze transfer learning against scratch training for both models
+- [ ] Analyze confusion-matrix error types in more depth
+- [ ] Try weighted loss
+- [ ] Try oversampling
+- [ ] Try stronger augmentation
+- [ ] Compare whether imbalance handling changes results
+
+### Thesis Enhancements
+
+- [ ] Add more training-curve discussion
+- [ ] Add more detailed Grad-CAM commentary
+- [ ] Expand Chapter 5 with deeper comparison to literature
+- [ ] Further reduce LaTeX overfull warnings
+
+### Defense Preparation
+
+- [ ] Create final defense slides
+- [ ] Add Grad-CAM figures to slides
+- [ ] Prepare answers for likely questions
+- [ ] Rehearse presentation
+
+## Progress by Phase
+
 ## Phase 1: Project Setup
 
 - [x] Confirm the final title in all project notes and thesis files
@@ -178,13 +264,6 @@ Training settings to define:
 - [ ] Record training time
 - [x] Save metrics
 
-Optional only if needed for imbalance:
-
-- [ ] Try weighted loss
-- [ ] Try oversampling
-- [ ] Try stronger augmentation
-- [ ] Compare whether imbalance handling changes results
-
 ## Phase 7: Evaluation and Comparison
 
 - [ ] Build one final comparison table covering all four experiments
@@ -229,14 +308,14 @@ Figures to prepare:
 
 ## Phase 9: Results Discussion
 
-- [ ] Summarize which model performed best
-- [ ] Explain why transfer learning helped or did not help
-- [ ] Discuss whether DenseNet121 or ResNet50 was more suitable
+- [x] Summarize which model performed best
+- [x] Explain why transfer learning helped or did not help
+- [x] Discuss whether DenseNet121 or ResNet50 was more suitable
 - [ ] Discuss class imbalance effects
-- [ ] Discuss limitations of NIH ChestX-ray14
-- [ ] Discuss limitations of binary classification
-- [ ] Discuss limitations of Grad-CAM interpretation
-- [ ] Write the key findings section
+- [x] Discuss limitations of NIH ChestX-ray14
+- [x] Discuss limitations of binary classification
+- [x] Discuss limitations of Grad-CAM interpretation
+- [x] Write the key findings section
 
 ## Phase 10: Thesis Writing
 
@@ -274,20 +353,20 @@ Figures to prepare:
 - [ ] Present baseline results
 - [x] Present transfer learning results
 - [x] Present final comparison table
-- [ ] Present Grad-CAM figures
+- [x] Present Grad-CAM figures
 
 ### Chapter 5: Discussion
 
-- [ ] Interpret the main results
-- [ ] Explain observed strengths and weaknesses
-- [ ] Discuss model trustworthiness
-- [ ] Discuss limitations
+- [x] Interpret the main results
+- [x] Explain observed strengths and weaknesses
+- [x] Discuss model trustworthiness
+- [x] Discuss limitations
 
 ### Chapter 6: Conclusion and Future Work
 
-- [ ] Summarize the main findings
-- [ ] State contributions
-- [ ] Propose future work
+- [x] Summarize the main findings
+- [x] State contributions
+- [x] Propose future work
 
 ## Phase 11: Figures, Tables, and References
 
@@ -320,24 +399,3 @@ Figures to prepare:
   - What are the limitations?
 - [ ] Rehearse presentation
 - [ ] Rehearse question answering
-
-## Final Submission Checklist
-
-- [ ] Dataset preprocessing is documented
-- [ ] All four experiments are completed
-- [ ] Final comparison table is complete
-- [ ] Grad-CAM figures are complete
-- [ ] Thesis is complete
-- [ ] Thesis formatting is checked
-- [ ] References are checked
-- [ ] Defense slides are complete
-
-## Priority Order If Time Becomes Tight
-
-- [ ] Finish dataset preprocessing first
-- [ ] Finish all four core experiments
-- [ ] Finish evaluation tables and figures
-- [ ] Finish Grad-CAM on the best model
-- [ ] Finish thesis writing
-
-If time is very limited, do not add extra models or extra datasets.
