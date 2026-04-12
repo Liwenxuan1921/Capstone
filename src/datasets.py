@@ -43,7 +43,9 @@ class NIHBinaryChestXrayDataset(Dataset):
     def _resolve_image_path(self, row: Dict[str, str]) -> Path:
         image_path = row.get("image_path", "").strip()
         if image_path:
-            return self._normalize_image_path(Path(image_path))
+            normalized_path = self._normalize_image_path(Path(image_path))
+            if normalized_path.exists():
+                return normalized_path
 
         if self.images_root is None:
             raise FileNotFoundError(

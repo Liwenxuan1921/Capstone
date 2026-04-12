@@ -217,15 +217,15 @@ Figures to prepare:
 
 ## Phase 8: Explainability with Grad-CAM
 
-- [ ] Select the best-performing model
-- [ ] Select representative test images
-- [ ] Generate Grad-CAM for correct `Normal` predictions
-- [ ] Generate Grad-CAM for correct `Abnormal` predictions
-- [ ] Generate Grad-CAM for false positives
-- [ ] Generate Grad-CAM for false negatives
-- [ ] Compare whether highlighted regions look medically reasonable
-- [ ] Write a short interpretation for each selected case
-- [ ] Choose 4 to 8 final figures for the thesis
+- [x] Select the best-performing model
+- [x] Select representative test images
+- [x] Generate Grad-CAM for correct `Normal` predictions
+- [x] Generate Grad-CAM for correct `Abnormal` predictions
+- [x] Generate Grad-CAM for false positives
+- [x] Generate Grad-CAM for false negatives
+- [x] Compare whether highlighted regions look medically reasonable
+- [x] Write a short interpretation for each selected case
+- [x] Choose 4 to 8 final figures for the thesis
 
 ## Phase 9: Results Discussion
 

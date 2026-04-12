@@ -119,14 +119,48 @@ In the final thesis, include representative visualizations such as:
 The error analysis should focus on whether abnormal images are being missed, whether the model produces too many false alarms, and whether transfer learning changes the balance between these error types. This section will be especially helpful when connecting numerical evaluation to the later Grad-CAM analysis.
 
 \section{Grad-CAM Visualization Results}
-The final section of this chapter should present representative Grad-CAM visualizations from the best-performing model and, if time allows, from one weaker comparison model. These visualizations are intended to support interpretability rather than replace quantitative evaluation. For a balanced discussion, include examples from the following groups:
-\begin{itemize}
-    \item correct normal predictions;
-    \item correct abnormal predictions;
-    \item false positives;
-    \item false negatives.
-\end{itemize}
+Grad-CAM analysis was conducted on the best-performing model, ResNet50 with transfer learning, in order to examine whether the model attended to plausible thoracic regions when making binary decisions. Four representative test cases were selected to cover correct normal prediction, correct abnormal prediction, false positive, and false negative. This set was chosen so that the visualization analysis would reflect both model strengths and model failure modes.
 
-The purpose of the Grad-CAM analysis is to evaluate whether the model attends to clinically plausible image regions. If the highlighted areas correspond to meaningful thoracic regions, this supports the argument that the model has learned useful visual structure. If the model focuses on irrelevant areas such as borders, acquisition artifacts, or background patterns, that behavior should be discussed critically.
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{outputs/figures/resnet50_transfer_full_v1/gradcam/correct_normal_00003468_005.png}
+        \caption{Correct normal prediction}
+        \label{fig:gradcam-correct-normal}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{outputs/figures/resnet50_transfer_full_v1/gradcam/correct_abnormal_00015799_013.png}
+        \caption{Correct abnormal prediction}
+        \label{fig:gradcam-correct-abnormal}
+    \end{subfigure}
+    \caption{Grad-CAM examples for correctly classified normal and abnormal chest X-rays using the ResNet50 transfer-learning model.}
+    \label{fig:gradcam-correct-cases}
+\end{figure}
 
-In the final version of this section, insert 4 to 8 selected Grad-CAM figures and provide a short interpretation for each one. The analysis should explain what the heatmap suggests about model reasoning and how the visual evidence relates to the model's quantitative strengths and weaknesses.
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{outputs/figures/resnet50_transfer_full_v1/gradcam/false_positive_00021772_015.png}
+        \caption{False positive}
+        \label{fig:gradcam-false-positive}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{outputs/figures/resnet50_transfer_full_v1/gradcam/false_negative_00004482_001.png}
+        \caption{False negative}
+        \label{fig:gradcam-false-negative}
+    \end{subfigure}
+    \caption{Grad-CAM examples for representative error cases produced by the ResNet50 transfer-learning model.}
+    \label{fig:gradcam-error-cases}
+\end{figure}
+
+In the correct normal case shown in Figure \ref{fig:gradcam-correct-normal}, the model focuses mainly on the central thoracic region rather than on borders or obvious acquisition artifacts. This suggests that the classifier is relying on broad chest structure when making a normal decision. In the correct abnormal case shown in Figure \ref{fig:gradcam-correct-abnormal}, the strongest activation is located in clinically relevant thoracic areas, with more emphasis placed on the right lung field. This behavior is consistent with the expectation that abnormal predictions should be driven by localized image evidence inside the chest region.
+
+The error cases reveal a more mixed picture. In the false positive example in Figure \ref{fig:gradcam-false-positive}, the heatmap is relatively diffuse and weighted toward one hemithorax, which suggests that the model may sometimes overreact to intensity variation, positioning, or imaging artifacts in otherwise normal radiographs. In the false negative example in Figure \ref{fig:gradcam-false-negative}, the activation remains narrow and centrally concentrated, indicating that the model may fail to respond strongly enough when abnormal findings are subtle or do not dominate the overall appearance of the chest X-ray.
+
+Overall, the Grad-CAM results provide partial support for the interpretability of the best-performing model. The model generally attends to anatomically plausible thoracic regions rather than to entirely irrelevant background areas, which is encouraging. At the same time, the error cases show that plausible attention maps do not guarantee correct prediction, and Grad-CAM should therefore be interpreted as supportive evidence rather than definitive clinical explanation.
