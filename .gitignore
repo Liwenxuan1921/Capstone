@@ -55,6 +55,12 @@ outputs/logs/*
 !outputs/logs/.gitkeep
 !outputs/logs/experiment_log_template.csv
 !outputs/logs/*.md
+!outputs/logs/densenet121_transfer_full_v1/
+!outputs/logs/densenet121_transfer_full_v1/history.csv
+!outputs/logs/resnet50_scratch_full_v1/
+!outputs/logs/resnet50_scratch_full_v1/history.csv
+!outputs/logs/densenet121_scratch_full_v1/
+!outputs/logs/densenet121_scratch_full_v1/history.csv
 
 # Checkpoints, generated metrics, and plots
 *.pt
