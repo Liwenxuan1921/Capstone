@@ -55,12 +55,22 @@ outputs/logs/*
 !outputs/logs/.gitkeep
 !outputs/logs/experiment_log_template.csv
 !outputs/logs/*.md
+!outputs/logs/resnet50_transfer_full_v1/
+!outputs/logs/resnet50_transfer_full_v1/history.csv
+!outputs/logs/resnet50_transfer_smoke/
+!outputs/logs/resnet50_transfer_smoke/history.csv
+!outputs/logs/resnet50_transfer_smoke_resumecheck/
+!outputs/logs/resnet50_transfer_smoke_resumecheck/history.csv
+!outputs/logs/resnet50_scratch_smoke/
+!outputs/logs/resnet50_scratch_smoke/history.csv
 !outputs/logs/densenet121_transfer_full_v1/
 !outputs/logs/densenet121_transfer_full_v1/history.csv
 !outputs/logs/resnet50_scratch_full_v1/
 !outputs/logs/resnet50_scratch_full_v1/history.csv
 !outputs/logs/densenet121_scratch_full_v1/
 !outputs/logs/densenet121_scratch_full_v1/history.csv
+!outputs/logs/densenet121_scratch_smoke/
+!outputs/logs/densenet121_scratch_smoke/history.csv
 
 # Checkpoints, generated metrics, and plots
 *.pt
