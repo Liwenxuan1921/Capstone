@@ -1,0 +1,39 @@
+\chapter{Supplementary Materials}
+
+\section{Training Configuration Summary}
+Table~\ref{tab:appendix-training-config} summarizes the shared training configuration used across the four main experiments. These settings are reported here for convenience so that the main methodology chapter can remain focused on the core design choices.
+
+\begin{table}[H]
+    \centering
+    \caption{Shared training configuration for the four main experiments.}
+    \label{tab:appendix-training-config}
+    \begin{tabular}{ll}
+        \toprule
+        Item & Setting \\
+        \midrule
+        Dataset & NIH ChestXray14 \\
+        Task & Binary classification (Normal vs.\ Abnormal) \\
+        Input size & $224 \times 224$ \\
+        Batch size & 16 \\
+        Optimizer & Adam \\
+        Loss function & BCEWithLogitsLoss \\
+        Maximum epochs & 20 \\
+        Early stopping patience & 5 \\
+        Validation criterion & AUC \\
+        Main architectures & ResNet50 and DenseNet121 \\
+        Training modes & From scratch and transfer learning \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Stored Experiment Artifacts}
+The project repository and local experiment folders retain several artifacts that support reproducibility. These include per-epoch training histories, experiment summaries, saved checkpoints, confusion matrices, ROC curves, and Grad-CAM visualizations. The materials were used to populate the result tables and qualitative analysis presented in Chapters 4 and 5.
+
+\begin{itemize}
+    \item Training histories were saved as CSV files for each completed run.
+    \item Best and latest checkpoints were stored separately to support evaluation and resumed training.
+    \item Figure outputs included training curves, confusion matrices, ROC curves, and Grad-CAM overlays.
+\end{itemize}
+
+\section{Additional Note on Grad-CAM Examples}
+The main text includes representative Grad-CAM figures for correct normal, correct abnormal, false positive, and false negative predictions. Additional visual examples were generated during analysis, but only a compact subset was included in Chapter 4 in order to keep the discussion focused. The selected examples were chosen to illustrate both clinically plausible attention patterns and the limitations of relying on heatmaps alone when interpreting model behavior.

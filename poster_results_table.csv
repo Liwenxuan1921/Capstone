@@ -1,0 +1,5 @@
+Model,Training,Accuracy,F1,AUC
+ResNet50,Scratch,0.673,0.612,0.723
+ResNet50,Transfer,0.695,0.655,0.745
+DenseNet121,Scratch,0.691,0.639,0.746
+DenseNet121,Transfer,0.671,0.565,0.742
