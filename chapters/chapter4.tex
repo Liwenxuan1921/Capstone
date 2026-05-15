@@ -102,18 +102,47 @@ Second, transfer learning did not affect the two architectures in the same way. 
 
 Taken together, the final results suggest that transfer learning is clearly beneficial for ResNet50, but not uniformly beneficial for DenseNet121 in this binary formulation. If the main goal is a balanced screening-oriented classifier, ResNet50 with transfer learning remains the most defensible choice because of its stronger recall and F1-score. If AUC alone is prioritized, DenseNet121 trained from scratch is marginally strongest. These tradeoffs justify the later discussion of threshold sensitivity, task formulation, and explainability.
 
+\subsection{Comparison with Previous Literature}
+The completed experiments are broadly consistent with prior literature in two ways. First, they support the observation that both ResNet and DenseNet remain strong baselines for chest radiograph classification \cite{ref:wang2017,ref:baltruschat2019}. DenseNet121 remained highly competitive in this thesis and achieved the highest test AUC when trained from scratch, which is consistent with the strong reputation of DenseNet-based models in chest X-ray studies such as CheXNet \cite{ref:rajpurkar2017}. Second, the ResNet50 results support earlier transfer-learning studies in medical imaging showing that pretrained features can improve convergence and final classification quality when the downstream task is limited in scope or affected by label noise \cite{ref:tajbakhsh2016,ref:shin2016}.
+
+At the same time, the present findings also differ from the most generic transfer-learning expectation. In this thesis, transfer learning clearly improved ResNet50, but DenseNet121 trained from scratch slightly outperformed DenseNet121 with transfer learning in accuracy, recall, F1-score, and AUC. This suggests that the benefit of pretraining depends on the interaction between architecture, label formulation, and decision threshold rather than acting as an automatic improvement in every setting. The result remains defensible in light of more recent work showing that chest-radiograph transfer strategies can be architecture-sensitive and can interact with domain-specific pretraining in non-uniform ways \cite{ref:imagawa2024,ref:chu2025ssl,ref:yuan2025,ref:yang2025foundation}. In the same way, the Grad-CAM findings are aligned with recent XAI literature: the heatmaps often highlight plausible thoracic regions, but they should still be interpreted as supportive evidence rather than as complete proof of correct clinical reasoning \cite{ref:selvaraju2017,ref:aasem2024,ref:ihongbe2024,ref:bhati2024,ref:ahmed2026xai}.
+
 \section{Training Curves and Error Analysis}
-This section should present supporting figures that explain how the models behaved during optimization. The most useful plots are training loss curves, validation loss curves, ROC curves, and confusion matrices. These figures help reveal whether the models converged smoothly, overfit the training data, or struggled with particular classes.
+This section reports the optimization and error-analysis figures used to interpret the completed runs. Together, the training curves, ROC curves, and confusion matrices clarify how the four experiments converged and where their classification tradeoffs emerged.
 
-In the final thesis, include representative visualizations such as:
-\begin{itemize}
-    \item training and validation loss curves for the best baseline model;
-    \item training and validation loss curves for the best transfer-learning model;
-    \item ROC curves for all four experiments;
-    \item confusion matrices for the most important comparisons.
-\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/thesis_revision/full_training_loss_curves.png}
+    \caption{Training and validation loss curves for the four full experiments.}
+    \label{fig:full-training-loss}
+\end{figure}
 
-The error analysis should focus on whether abnormal images are being missed, whether the model produces too many false alarms, and whether transfer learning changes the balance between these error types. This section will be especially helpful when connecting numerical evaluation to the later Grad-CAM analysis.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/thesis_revision/full_auc_curves.png}
+    \caption{Training and validation AUC curves for the four full experiments.}
+    \label{fig:full-training-auc}
+\end{figure}
+
+Figures \ref{fig:full-training-loss} and \ref{fig:full-training-auc} show that all four experiments converged in a stable way, but not with identical dynamics. ResNet50 with transfer learning improved steadily throughout training and continued to gain validation AUC until the final epoch, which is consistent with its strong balanced test performance. DenseNet121 trained from scratch also improved consistently and reached its best validation AUC at the end of training, which helps explain why it achieved the highest final test AUC. In contrast, DenseNet121 with transfer learning peaked earlier and then plateaued, which is consistent with its early-stopped training trajectory and lower final recall. The scratch ResNet50 baseline converged more slowly and remained the weakest of the four models across the main metrics.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.72\textwidth]{outputs/figures/thesis_revision/full_roc_comparison.png}
+    \caption{Test ROC curves for the four full experiments generated from per-sample prediction probabilities.}
+    \label{fig:full-roc-summary}
+\end{figure}
+
+Figure \ref{fig:full-roc-summary} shows the ROC comparison for all four completed experiments using the per-sample prediction probabilities exported from the final test-set evaluations. This makes the ROC analysis consistent with the four-model design. DenseNet121 trained from scratch achieved the highest AUC (0.7457), ResNet50 with transfer learning was nearly identical (0.7454), DenseNet121 with transfer learning remained close (0.7421), and ResNet50 trained from scratch was lower (0.7225). The close AUC values among the strongest three models indicate similar ranking ability across thresholds, but the confusion matrices in Figure \ref{fig:full-confusion} show that their default-threshold error profiles differ substantially.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/thesis_revision/full_confusion_matrices.png}
+    \caption{Final test confusion matrices for all four experimental configurations.}
+    \label{fig:full-confusion}
+\end{figure}
+
+The confusion matrices in Figure \ref{fig:full-confusion} make the screening tradeoff especially clear. ResNet50 with transfer learning generated the largest number of correctly detected abnormal cases among the models with strong overall balance, which is why it remains the preferred screening-oriented configuration. DenseNet121 with transfer learning produced the fewest false positives, but it also produced the most false negatives, which makes it less attractive when missed abnormal cases are treated as the more serious error. DenseNet121 trained from scratch occupied a more moderate position, combining strong AUC with better recall than its transfer-learning counterpart.
 
 \section{Grad-CAM Visualization Results}
 Grad-CAM analysis was conducted on the selected best-balance model, ResNet50 with transfer learning, in order to examine whether the model attended to plausible thoracic regions when making binary decisions. Four representative test cases were selected to cover correct normal prediction, correct abnormal prediction, false positive, and false negative. This set was chosen so that the visualization analysis would reflect both model strengths and model failure modes.

@@ -20,6 +20,7 @@ class NIHBinaryChestXrayDataset(Dataset):
         self.csv_path = Path(csv_path)
         self.transform = transform
         self.images_root = Path(images_root) if images_root is not None else None
+        self._image_index: Optional[Dict[str, Path]] = None
         self.rows = self._load_rows()
 
     def _load_rows(self) -> List[Dict[str, str]]:
@@ -56,9 +57,9 @@ class NIHBinaryChestXrayDataset(Dataset):
         if candidate.exists():
             return candidate
 
-        matches = list(self.images_root.rglob(row["image_name"]))
-        if matches:
-            return matches[0]
+        indexed_match = self._get_indexed_image_path(row["image_name"])
+        if indexed_match is not None:
+            return indexed_match
 
         raise FileNotFoundError(f"Could not locate image file for: {row['image_name']}")
 
@@ -73,6 +74,17 @@ class NIHBinaryChestXrayDataset(Dataset):
             return Path(f"{drive}:\\{remainder}")
 
         return image_path
+
+    def _get_indexed_image_path(self, image_name: str) -> Optional[Path]:
+        if self.images_root is None:
+            return None
+
+        if self._image_index is None:
+            self._image_index = {}
+            for image_path in self.images_root.rglob("*.png"):
+                self._image_index.setdefault(image_path.name, image_path)
+
+        return self._image_index.get(image_name)
 
     def __len__(self) -> int:
         return len(self.rows)

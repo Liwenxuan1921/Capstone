@@ -14,6 +14,7 @@
 \usepackage{tocloft}
 \usepackage{threeparttable}
 \usepackage{booktabs}
+\usepackage{amsmath}
 \usepackage{fontspec}
 \usepackage{pifont}
 
@@ -113,7 +114,7 @@ Computer Science and Technology \hfill Wenzhou, China
 \clearpage
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
-Chest X-ray imaging is one of the most widely used diagnostic tools for detecting thoracic abnormalities, yet manual interpretation can be time-consuming and subject to inter-observer variability. Deep learning has shown strong potential for assisting radiographic diagnosis, but model performance often depends on the availability of labeled data and model decisions are frequently difficult to interpret. This thesis investigates whether transfer learning and explainable deep learning can improve chest X-ray diagnostic classification in a focused and reproducible experimental setting. The study uses the NIH ChestX-ray14 dataset and formulates the task as binary classification, where images labeled ``No Finding'' are treated as normal and images with any pathology label are treated as abnormal. Two convolutional neural network architectures, ResNet50 and DenseNet121, are evaluated under four controlled experimental configurations: training from scratch and transfer learning for each architecture. Model performance is assessed using accuracy, precision, recall, F1-score, area under the ROC curve, and confusion-matrix-based error analysis. To improve interpretability, Gradient-weighted Class Activation Mapping (Grad-CAM) is applied to representative predictions in order to visualize the image regions that most strongly influence classification decisions. The final results show that DenseNet121 trained from scratch achieved the highest test AUC of 0.7457, while ResNet50 with transfer learning provided the best overall balance of accuracy, recall, and F1-score, reaching a test accuracy of 0.6955 and F1-score of 0.6547. The Grad-CAM analysis further showed that the selected best-balance model generally focused on anatomically plausible thoracic regions while still exhibiting interpretable failure cases. Overall, this work provides a practical and academically grounded capstone study on the role of training strategy and explainability in medical image analysis.
+Chest X-ray imaging is one of the most widely used diagnostic tools for detecting thoracic abnormalities, yet manual interpretation can be time-consuming and subject to inter-observer variability. Deep learning has shown strong potential for assisting radiographic diagnosis, but model performance often depends on the availability of labeled data and model decisions are frequently difficult to interpret. This thesis investigates how transfer learning and explainable deep learning affect chest X-ray diagnostic classification in a focused and reproducible experimental setting. The study uses the NIH ChestX-ray14 dataset and formulates the task as binary classification, where images labeled ``No Finding'' are treated as normal and images with any pathology label are treated as abnormal. Two convolutional neural network architectures, ResNet50 and DenseNet121, are evaluated under four controlled experimental configurations: training from scratch and transfer learning for each architecture. Model performance is assessed using accuracy, precision, recall, F1-score, area under the ROC curve, and confusion-matrix-based error analysis. To improve interpretability, Gradient-weighted Class Activation Mapping (Grad-CAM) is applied to representative predictions in order to visualize the image regions that most strongly influence classification decisions. The final results show that DenseNet121 trained from scratch achieved the highest test AUC of 0.7457, while ResNet50 with transfer learning provided the best overall balance of accuracy, recall, and F1-score, reaching a test accuracy of 0.6955 and F1-score of 0.6547. These results indicate that transfer learning improved ResNet50 substantially, but its benefit was not uniform across architectures. The Grad-CAM analysis further showed that the selected best-balance model generally focused on anatomically plausible thoracic regions while still exhibiting interpretable failure cases. Overall, the results suggest that controlled comparisons of training strategy and explainability can provide useful insights for capstone-scale medical image classification research.
 
 \textbf{Keywords:} chest X-ray classification; transfer learning; deep learning; Grad-CAM; medical image analysis.
 
@@ -180,14 +181,12 @@ Finally, I would like to thank my family for their patience, understanding, and 
 \include{chapters/chapter3}
 \include{chapters/chapter4}
 \include{chapters/chapter5}
-\include{chapters/chapter6}
 
 \appendix
 \include{chapters/appendixA}
 
+\renewcommand{\bibname}{References}
 \begin{thebibliography}{99}
-\addcontentsline{toc}{chapter}{References}
-\phantomsection
 \bibitem{ref:wang2017}
 X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri, and R. M. Summers, ``ChestX-ray8: Hospital-scale Chest X-ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases,'' in \textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2017, pp. 2097--2106.
 \bibitem{ref:litjens2017}
@@ -201,7 +200,7 @@ P. Rajpurkar et al., ``CheXNet: Radiologist-Level Pneumonia Detection on Chest X
 \bibitem{ref:irvin2019}
 J. Irvin et al., ``CheXpert: A Large Chest Radiograph Dataset with Uncertainty Labels and Expert Comparison,'' in \textit{Proceedings of the AAAI Conference on Artificial Intelligence}, vol. 33, no. 1, pp. 590--597, 2019.
 \bibitem{ref:baltruschat2019}
-I. M. Baltruschat, H. Nickisch, M. Grass, T. Knopp, and A. Saalbach, ``Comparison of Deep Learning Approaches for Multi-Label Chest X-Ray Classification,'' \textit{Scientific Reports}, vol. 9, article 6381, 2019.
+I. M. Baltruschat, H. Nickisch, M. Grass, T. Knopp, and A. Saalbach, ``Comparison of deep learning approaches for multi-label chest X-ray classification,'' \textit{Scientific Reports}, vol. 9, Art. no. 6381, 2019.
 \bibitem{ref:pan2010}
 S. J. Pan and Q. Yang, ``A Survey on Transfer Learning,'' \textit{IEEE Transactions on Knowledge and Data Engineering}, vol. 22, no. 10, pp. 1345--1359, 2010.
 \bibitem{ref:tajbakhsh2016}
@@ -209,41 +208,41 @@ N. Tajbakhsh et al., ``Convolutional Neural Networks for Medical Image Analysis:
 \bibitem{ref:shin2016}
 H.-C. Shin et al., ``Deep Convolutional Neural Networks for Computer-Aided Detection: CNN Architectures, Dataset Characteristics and Transfer Learning,'' \textit{IEEE Transactions on Medical Imaging}, vol. 35, no. 5, pp. 1285--1298, 2016.
 \bibitem{ref:yao2017}
-L. Yao, E. Poblenz, D. Dagunts, B. Covington, D. Bernard, and K. Lyman, ``Learning to Diagnose from Scratch by Exploiting Dependencies Among Labels,'' arXiv:1710.10501, 2017.
+L. Yao, E. Poblenz, D. Dagunts, B. Covington, D. Bernard, and K. Lyman, ``Learning to diagnose from scratch by exploiting dependencies among labels,'' \textit{arXiv preprint} arXiv:1710.10501, 2017.
 \bibitem{ref:selvaraju2017}
 R. R. Selvaraju et al., ``Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization,'' in \textit{Proceedings of the IEEE International Conference on Computer Vision}, 2017, pp. 618--626.
 \bibitem{ref:chaddad2023}
-A. Chaddad, J. Peng, J. Xu, and A. Bouridane, ``Survey of Explainable AI Techniques in Healthcare,'' \textit{Sensors}, vol. 23, no. 2, article 634, 2023.
+A. Chaddad, J. Peng, J. Xu, and A. Bouridane, ``Survey of Explainable AI Techniques in Healthcare,'' \textit{Sensors}, vol. 23, no. 2, Art. no. 634, 2023.
 \bibitem{ref:bhati2024}
-D. Bhati, F. Neha, and M. Amiruzzaman, ``A Survey on Explainable Artificial Intelligence (XAI) Techniques for Visualizing Deep Learning Models in Medical Imaging,'' \textit{Journal of Imaging}, vol. 10, no. 10, article 239, 2024.
+D. Bhati, F. Neha, and M. Amiruzzaman, ``A survey on explainable artificial intelligence (XAI) techniques for visualizing deep learning models in medical imaging,'' \textit{Journal of Imaging}, vol. 10, no. 10, Art. no. 239, 2024.
 \bibitem{ref:huang2024vit}
 L. Huang, J. Ma, H. Yang, and Y. Wang, ``Research and Implementation of Multi-Disease Diagnosis on Chest X-Ray Based on Vision Transformer,'' \textit{Quantitative Imaging in Medicine and Surgery}, vol. 14, no. 3, pp. 2539--2555, 2024.
 \bibitem{ref:yu2024}
-K. Yu et al., ``Anatomy-specific Progression Classification in Chest Radiographs via Weakly Supervised Learning,'' \textit{Radiology: Artificial Intelligence}, vol. 6, no. 5, e230277, 2024.
+K. Yu et al., ``Anatomy-specific Progression Classification in Chest Radiographs via Weakly Supervised Learning,'' \textit{Radiology: Artificial Intelligence}, vol. 6, no. 5, Art. no. e230277, 2024.
 \bibitem{ref:lin2024fewshot}
 P.-C. Lin, P.-C. Kuo, C.-J. Liu, and M.-R. Lee, ``Enhancing Few-Shot Chest X-ray Classification through Generative Class Augmentation,'' in \textit{Proceedings of the Annual International Conference of the IEEE Engineering in Medicine and Biology Society}, 2024, pp. 1--4.
 \bibitem{ref:guo2024}
-L. Guo et al., ``Deep Learning for Chest X-ray Diagnosis: Competition Between Radiologists with or Without Artificial Intelligence Assistance,'' \textit{Journal of Imaging Informatics in Medicine}, vol. 37, no. 3, pp. 922--934, 2024.
+L. Guo et al., ``Deep learning for chest X-ray diagnosis: Competition between radiologists with or without artificial intelligence assistance,'' \textit{Journal of Imaging Informatics in Medicine}, vol. 37, no. 3, pp. 922--934, 2024.
 \bibitem{ref:imagawa2024}
-K. Imagawa and K. Shiomoto, ``Evaluation of Effectiveness of Self-Supervised Learning in Chest X-Ray Imaging to Reduce Annotated Images,'' \textit{Journal of Imaging Informatics in Medicine}, vol. 37, no. 4, pp. 1618--1624, 2024.
+K. Imagawa and K. Shiomoto, ``Evaluation of effectiveness of self-supervised learning in chest X-ray imaging to reduce annotated images,'' \textit{Journal of Imaging Informatics in Medicine}, vol. 37, no. 4, pp. 1618--1624, 2024.
 \bibitem{ref:aasem2024}
-M. Aasem and M. J. Iqbal, ``Toward Explainable AI in Radiology: Ensemble-CAM for Effective Thoracic Disease Localization in Chest X-ray Images Using Weak Supervised Learning,'' \textit{Frontiers in Big Data}, vol. 7, article 1366415, 2024.
+M. Aasem and M. J. Iqbal, ``Toward explainable AI in radiology: Ensemble-CAM for effective thoracic disease localization in chest X-ray images using weak supervised learning,'' \textit{Frontiers in Big Data}, vol. 7, Art. no. 1366415, 2024.
 \bibitem{ref:ihongbe2024}
-I. E. Ihongbe et al., ``Evaluating Explainable Artificial Intelligence (XAI) Techniques in Chest Radiology Imaging Through a Human-Centered Lens,'' \textit{PLOS ONE}, vol. 19, no. 10, e0308758, 2024.
+I. E. Ihongbe et al., ``Evaluating explainable artificial intelligence (XAI) techniques in chest radiology imaging through a human-centered lens,'' \textit{PLOS ONE}, vol. 19, no. 10, Art. no. e0308758, 2024.
 \bibitem{ref:chu2025ssl}
 S. Chu et al., ``Learning Consistent Semantic Representation for Chest X-ray via Anatomical Localization in Self-Supervised Pre-Training,'' \textit{IEEE Journal of Biomedical and Health Informatics}, vol. 29, no. 3, pp. 2100--2112, 2025.
 \bibitem{ref:yuan2025}
 H. Yuan et al., ``Rethinking Domain-Specific Pretraining by Supervised or Self-Supervised Learning for Chest Radiograph Classification: A Comparative Study Against ImageNet Counterparts in Cold-Start Active Learning,'' \textit{Health Care Science}, vol. 4, no. 2, pp. 110--143, 2025.
 \bibitem{ref:fu2025hybrid}
-X. Fu, R. Lin, W. Du, A. Tavares, and Y. Liang, ``Explainable Hybrid Transformer for Multi-classification of Lung Disease Using Chest X-rays,'' \textit{Scientific Reports}, vol. 15, article 6650, 2025.
+X. Fu, R. Lin, W. Du, A. Tavares, and Y. Liang, ``Explainable hybrid transformer for multi-classification of lung disease using chest X-rays,'' \textit{Scientific Reports}, vol. 15, Art. no. 6650, 2025.
 \bibitem{ref:lin2025cxrlt}
-M. Lin et al., ``CXR-LT 2024: A MICCAI Challenge on Long-Tailed, Multi-Label, and Zero-Shot Disease Classification from Chest X-ray,'' \textit{Medical Image Analysis}, vol. 106, article 103739, 2025.
+M. Lin et al., ``CXR-LT 2024: A MICCAI challenge on long-tailed, multi-label, and zero-shot disease classification from chest X-ray,'' \textit{Medical Image Analysis}, vol. 106, Art. no. 103739, 2025.
 \bibitem{ref:fujiya2025}
-G. Fujiya, M. Tang, and A. Grasnick, ``Assessment of Mass Classification from Chest X-ray Using Double-Transfer Learning: A Comparative Study with Diverse Image Selection for Single-Transfer Learning,'' \textit{Clinical Radiology}, vol. 89, article 107023, 2025.
+G. Fujiya, M. Tang, and A. Grasnick, ``Assessment of mass classification from chest X-ray using double-transfer learning: A comparative study with diverse image selection for single-transfer learning,'' \textit{Clinical Radiology}, vol. 89, Art. no. 107023, 2025.
 \bibitem{ref:yang2025foundation}
 Z. Yang et al., ``Chest X-Ray Foundation Model With Global and Local Representations Integration,'' \textit{IEEE Transactions on Medical Imaging}, vol. 44, no. 12, pp. 4787--4799, 2025.
 \bibitem{ref:ahmed2026xai}
-F. Ahmed et al., ``Explainable Artificial Intelligence (XAI) in Medical Imaging: A Systematic Review of Techniques, Applications, and Challenges,'' \textit{BMC Medical Imaging}, vol. 26, no. 1, article 37, 2026.
+F. Ahmed et al., ``Explainable artificial intelligence (XAI) in medical imaging: A systematic review of techniques, applications, and challenges,'' \textit{BMC Medical Imaging}, vol. 26, no. 1, Art. no. 37, 2026.
 \end{thebibliography}
 
 \label{endmainmatter}
